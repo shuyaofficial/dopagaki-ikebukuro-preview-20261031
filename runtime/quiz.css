@@ -1,0 +1,4689 @@
+/* ===========================================================================
+   問題集 — assets/quiz.css
+   DESIGN.md のトークン・タイポ・スペーシング・角丸・モーション規約を複製して使う。
+   ルート(../)の assets/styles.css は import しない（file:// でも独立して動くように）。
+   =========================================================================== */
+
+:root {
+  color-scheme: light dark;
+  --bg: #F5F5F7;
+  --surface: #FFFFFF;
+  --surface-2: #F4F4F7;
+  --text: #1D1D1F;
+  --text-2: #6E6E73;
+  --text-3: #A1A1A6;
+  --separator: rgba(0, 0, 0, 0.08);
+  --accent: #0071E3;
+  --accent-soft: rgba(0, 113, 227, 0.12);
+  --success: #34C759;
+  --success-soft: rgba(52, 199, 89, 0.16);
+  --warn: #FF9F0A;
+  --danger: #FF3B30;
+  --danger-soft: rgba(255, 59, 48, 0.14);
+  --ring-track: rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, .04), 0 10px 30px rgba(0, 0, 0, .06);
+
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Hiragino Sans", "Noto Sans JP", sans-serif;
+
+  --ease-out: cubic-bezier(.22, .61, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --dur-fast: 180ms;
+  --dur: 280ms;
+  --dur-slow: 460ms;
+
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-pill: 999px;
+
+  --pad-page: 16px;
+  --maxw: 680px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --surface: #1C1C1E;
+    --surface-2: #2C2C2E;
+    --text: #F5F5F7;
+    --text-2: #AEAEB2;
+    --text-3: #6E6E73;
+    --separator: rgba(255, 255, 255, 0.10);
+    --accent: #0A84FF;
+    --accent-soft: rgba(10, 132, 255, 0.18);
+    --success: #30D158;
+    --success-soft: rgba(48, 209, 88, 0.22);
+    --warn: #FFD60A;
+    --danger: #FF453A;
+    --danger-soft: rgba(255, 69, 58, 0.22);
+    --ring-track: rgba(255, 255, 255, 0.12);
+    --shadow-card: none;
+  }
+}
+
+/* --- reset ------------------------------------------------------------------ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* 16px を下げないこと。iPhone の Safari は 16px 未満の入力欄にフォーカスすると
+   ページを自動で拡大し、そのまま戻らない。入力欄は font: inherit で
+   ここから受け取っているので、この1か所が全部の入力欄の下限になる。 */
+body {
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  padding:
+    env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* --- layout ------------------------------------------------------------------ */
+.qz-app {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 8px var(--pad-page) 48px;
+}
+
+@media (min-width: 480px) {
+  .qz-app {
+    --pad-page: 20px;
+  }
+}
+
+.qz-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* --- card --------------------------------------------------------------------- */
+.qz-card {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  padding: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .qz-card {
+    border: 1px solid var(--separator);
+  }
+}
+
+/* --- header (home) ------------------------------------------------------------ */
+.qz-header {
+  padding: 16px 4px 8px;
+}
+
+/* ダッシュボードへの戻り。既存の .qz-back（画面内の戻る）と同じ控えめさに揃える。 */
+.qz-header__back {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.qz-header__back:hover {
+  color: var(--accent);
+}
+
+.qz-header__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.qz-header__caption {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+/* --- home tabs / rounds ------------------------------------------------------- */
+/* タブはヘッダ直下の2択だけに留める。カードを増やさず、現在地は塗りつぶしと
+   aria-selected の両方で分かるようにする。 */
+.qz-home-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 4px;
+  margin-top: 14px;
+  padding: 4px;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+
+.qz-prompt-settings { padding: 20px; overflow-wrap: anywhere; }
+.qz-prompt-settings label { display: grid; gap: 8px; margin: 18px 0; }
+.qz-prompt-settings input, .qz-prompt-settings textarea, .qz-prompt-settings select {
+  width: 100%; min-width: 0; box-sizing: border-box; padding: 12px;
+  color: var(--text); background: var(--surface); border: 1px solid var(--text-2);
+  border-radius: 6px; font: inherit; line-height: 1.6;
+}
+.qz-prompt-settings textarea { resize: vertical; }
+.qz-prompt-settings p { line-height: 1.8; }
+.qz-prompt-settings .qz-editor__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.qz-home-tab {
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  color: var(--text-2);
+  font-size: 14px;
+  font-weight: 600;
+  /* 2行に折れるとき、「覚／える」のように最後の行に2文字だけ残さず、行の長さをそろえる（2026-10-02）。 */
+  text-wrap: balance;
+  transition: background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.qz-home-tab[aria-selected="true"] {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .qz-home-tab[aria-selected="true"] {
+    background: var(--surface-2);
+    box-shadow: none;
+  }
+}
+
+.qz-home-panel,
+.qz-solve-home {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.qz-round-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.qz-round-selector__label {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.qz-round-selector__options {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 6px;
+}
+
+.qz-round-selector__option {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.qz-round-selector__option[aria-pressed="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.qz-round-selector__option:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+/* 「全ての復習」タブ。周回セレクタと同じ系統で、直下に並んだときに
+   ひと続きの選択肢に見えるようにする（変数経由なのでテーマは theme-dpg.css が正）。 */
+.qz-all-review {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.qz-all-review__label {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.qz-all-review__options {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 6px;
+}
+
+.qz-all-review__option {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.qz-all-review__option[aria-pressed="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.qz-empty {
+  text-align: center;
+  color: var(--text-3);
+  font-size: 14px;
+  padding: 40px 20px;
+}
+
+/* --- buttons -------------------------------------------------------------------- */
+.qz-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: var(--r-md);
+  font-size: 15px;
+  font-weight: 600;
+  /* 2行に折れるとき最後の行に「）」だけ残さず、行の長さをそろえる（2026-10-02。「AIに解説を頼む（…コピー）」で起きた）。 */
+  text-wrap: balance;
+  transition: transform var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.qz-btn:active {
+  transform: scale(.97);
+}
+
+.qz-btn:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.qz-btn--block {
+  width: 100%;
+}
+
+.qz-btn--primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.qz-btn--outline {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.qz-btn--ghost {
+  background: none;
+  color: var(--text-2);
+}
+
+/* 元に戻せない操作だけに使う。塗りは薄い赤、文字だけを --danger にする。
+   --danger をそのまま塗りにすると、白抜き文字が primary（青の塗り）と同じ
+   重さになり、カードの中で一番強いボタンが「消す」になってしまう。 */
+.qz-btn--danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* 同じ重みのボタンを横2連にする。全部を縦に積むと結果画面が7段になり、
+   スクロールしないと「トップへ」に届かなくなる。
+   gap も高さも .qz-btn の 44px 最小タップ領域は崩さない。 */
+.qz-btn-row {
+  display: flex;
+  gap: 8px;
+}
+
+.qz-btn-row .qz-btn {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* 副になる側だけ幅を詰めて主/副の関係を見た目に出す。
+   flex-basis ではなく flex-grow を落とすのは、ラベルが「絞る」の2文字でも
+   タップ領域が細くなりすぎないようにするため。 */
+.qz-btn-row .qz-btn--narrow {
+  flex: 0 1 auto;
+  min-width: 88px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.qz-back {
+  align-self: flex-start;
+  font-size: 14px;
+  color: var(--text-2);
+  padding: 8px 4px;
+  /* ★ 押せる所は 44px（2026-10-02 スマホ総点検。39px だった）。文字の見た目と左端は変えない。 */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* --- set list (home) ------------------------------------------------------------ */
+.qz-set-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.qz-set-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qz-set-card__title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.qz-set-card__meta {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+/* progressLabel に周回名が入らない vm 用の小さな補助ラベル。本文より先に
+   「今どの周か」を読むためのもので、単独カードを増やさない。 */
+.qz-set-card__round {
+  align-self: flex-start;
+  margin-top: -2px;
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+/* ロックは disabled の開始ボタンでは表さない。押せない操作子を残すより、
+   理由を本文として出す方がスクリーンリーダー/タッチ双方で明快。 */
+.qz-set-card--locked {
+  box-shadow: none;
+}
+
+.qz-set-card__locked {
+  padding-top: 2px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.qz-set-card__locked::before {
+  content: "ロック中：";
+  color: var(--text-3);
+}
+
+/* 間違いの件数。上の挑戦済み行と1つの塊に見せる（間にボタンが挟まって
+   離れていたことが、隣に出ていた復習の進捗「0/4」を件数と読ませた原因）。 */
+.qz-set-card__wrong {
+  margin-top: -6px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+/* 間違いの内訳。直下の「間違いN問を復習」ボタンの説明文なので、
+   ボタンとの隙間を詰めて視覚的に1つの塊にする。 */
+.qz-set-card__breakdown {
+  margin-top: 2px;
+  margin-bottom: -4px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* 記録のリセット。1段目は目立たせない（探して初めて見つかるくらいでよい）。
+   セパレータで上のボタン群と切るのは、押し間違いを距離ではなく境界で防ぐため。 */
+.qz-set-card__reset {
+  margin-top: 2px;
+  padding-top: 12px;
+  border-top: 1px solid var(--separator);
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* 2段階目。qz-set-card 自体が gap:10px の縦 flex なので、ここも同じ骨格で並べる。 */
+.qz-set-card__reset-armed {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 2px;
+  padding-top: 12px;
+  border-top: 1px solid var(--separator);
+}
+
+.qz-set-card__reset-note {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+/* 練習の「理解した記録をリセット」。年に数回の操作なので、画面のいちばん下に
+   小さく置く。2段階目の骨格はセットカードの記録リセットと同じ。 */
+.qz-practice-home__reset {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.qz-practice-home__reset-armed {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--separator);
+}
+
+/* 問題未登録のセット。押せる要素が無いことを彩度で伝える（枠だけ残す）。 */
+.qz-set-card--empty {
+  gap: 6px;
+  box-shadow: none;
+  border: 1px dashed var(--separator);
+  background: transparent;
+}
+
+.qz-set-card--empty .qz-set-card__title {
+  color: var(--text-2);
+}
+
+.qz-set-card--empty .qz-set-card__meta {
+  color: var(--text-3);
+}
+
+/* --- setup ------------------------------------------------------------------------ */
+.qz-page__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 0 4px;
+  text-wrap: balance; /* 「Part1・オリジナル問題 — 練／習」のような取り残しを出さない（2026-10-02） */
+}
+
+.qz-setup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.qz-setup__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.qz-setup__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.qz-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.qz-pill {
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 14px;
+  /* 「今日の復習（理解して1・3・7日）（0／問）」のように件数だけが次の行へ落ちるのを避ける（2026-10-02）。 */
+  text-wrap: balance;
+  transition: background var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+}
+
+.qz-pill[data-selected="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* 説明文。橙（--warn）から地の文の色へ落とす。説明も警告も同じ橙だと、
+   色が「これは破壊的だ」という信号として機能しなくなる。 */
+.qz-setup__note {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+/* 押すと何かが消えるときだけ出す行。橙はこちらが独占する。 */
+.qz-setup__warn {
+  font-size: 13px;
+  color: var(--warn);
+  font-weight: 600;
+}
+
+/* --- practice home ----------------------------------------------------------- */
+.qz-practice-home {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.qz-practice-home__disabled {
+  font-size: 13px;
+  color: var(--warn);
+}
+
+.qz-practice-range__controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: end;
+  gap: 8px;
+}
+
+.qz-practice-range__controls--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.qz-practice-range__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.qz-practice-range__field-label,
+.qz-practice-range__separator,
+.qz-practice-range__summary {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.qz-practice-range__separator {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1px;
+}
+
+.qz-practice-range__select {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--separator);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px; /* iOS Safari のフォーカス時ズームを防ぐ */
+}
+
+.qz-practice-range__summary {
+  margin-top: -2px;
+}
+
+/* --- quiz head / progress --------------------------------------------------------- */
+.qz-quiz-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 0;
+}
+
+/* 見出しは h1（views.js）。UA 既定の margin と font-size が効くとヘッダーの高さも
+   文字サイズも変わるので、どちらもここで明示する。 */
+.qz-quiz-head__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+/* フォーカスは移すが、マウス操作のときまで枠を出さない（tabindex="-1" の受け皿）。 */
+.qz-quiz-head__title:focus { outline: none; }
+.qz-quiz-head__title:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.qz-exit-btn {
+  font-size: 13px;
+  color: var(--text-2);
+  padding: 8px 4px;
+  /* ★ 押せる所は 44px（2026-10-02 スマホ総点検。37px だった）。 */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* 見出しを伸ばして、🔊 と「トップへ」を右端へ寄せる。
+   3つを space-between のままにすると 🔊 が中央に浮いて、押す対象に見えない。 */
+.qz-quiz-head__title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  /* 2行まで折り返して、それ以上だけ … で切る（2026-10-04 本人OK）。
+     スピーカーと⚙が並んでから、390px では1行だと「Part1・令和8…」まで削れていた。 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow-wrap: anywhere;
+}
+
+/* 出題中のヘッダの4つのボタン（🔊 ✏️ 🗣️ ⚙。.qz-sound-btn）。押せることは分かるが、選択肢より目立ってはいけない。
+   2026-10-14 本人承認: 絵（.qz-sound-btn__icon）の下に小さな灰色の名前（.qz-sound-btn__name。音・計算・独り言・設定）を付けて縦に積む。
+   ★ 当たり判定は 44px・高さも 44px のまま ★ 絵 20px＋名前 12px＋隙間でも 44px に収まるので、ヘッダの高さは変わらない。
+   地は透明で、押している間（✏️ の開いている間）と hover だけ色を敷く。 */
+.qz-sound-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 3px;
+  margin-right: 2px;
+  border: none;
+  border-radius: var(--r-sm, 12px);
+  background: transparent;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) { .qz-sound-btn:hover { background: var(--surface-2); } } /* タッチで押した後に地が残らないよう、マウスの端末だけ（2026-10-14） */
+
+.qz-sound-btn__icon { position: relative; display: block; height: 20px; line-height: 20px; }
+/* 2026-10-16 区間6（関所F Q4 f）: 絵は絵文字をやめ、線の絵（views.js の lineIcon）にした。20px・線の色は紫（押せる物の色）。
+   下のタブ・横のメニューと同じ作りにそろえて色の点を散らさない。赤い斜線（下の ::after）と赤い「オフ」は前のまま（本人の決定）。 */
+.qz-sound-btn__icon { color: var(--accent); }
+.qz-sound-btn__icon .dpg-ico { display: block; width: 20px; height: 20px; }
+.qz-sound-btn__name {
+  display: block;
+  max-width: 100%;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 12px;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+/* オフの見せ方は「赤い斜線」にそろえる（独り言と音。2026-10-14 本人承認）。絵に赤い斜線を1本重ね、名前の代わりに赤い「オフ」を出す。
+   薄くして沈める（opacity）のはやめた: 暗い画面だと 🔊 との差が見えず、消音中に音声解説や満点演出が出ないのを不具合と取り違えるため。
+   斜線は絵（.qz-sound-btn__icon）の疑似要素。白い縁を付けて、絵の上でも赤が読める。 */
+/* 2026-10-28 区間T4 直し係A（本人「オフの時はスラッシュで音と同じように今オフなんだなってわかるようにするといいかもね」）:
+   ［声］も、声で聞いていない間（一時停止中・オフ・マイクが許可されていない・この端末では使えない）は、この同じ赤い斜線をマイクの絵に重ねる。
+   状態は voice-chat-control.js（と声がオフの間の［声］views.js の buildVoiceEntry）が data-voice に置く。聞いている間（listening・ptt-listening）と
+   押してから話す形の待ち（ptt）は線なし（聞いている間は今までどおり薄紫の地と緑の点＝voice-chat.css）。全員・どの画面（出題・読んで覚える・PC）も同じ。
+   ［⋯ほか］のシートの行（本人だけに見える 't-toolbar'。dpg-t-toolbar.js が切れている行に data-off を置く）も、帯と同じ線にする。 */
+.qz-sound-btn[data-off="true"] .qz-sound-btn__icon::after,
+.qz-voice-btn:is([data-voice="paused"], [data-voice="off"], [data-voice="denied"], [data-voice="unsupported"]) .qz-sound-btn__icon::after,
+.dpg-tb-row[data-off="true"] .dpg-tb-row__ico::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 1px;
+  background: var(--danger);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .85);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.qz-sound-btn__name--off { font-weight: 800; color: var(--danger); }
+
+.qz-sound-btn:disabled {
+  opacity: .25;
+  cursor: default;
+}
+
+.qz-progress-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 4px;
+}
+
+.qz-progress-label {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.qz-progress-bar {
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.qz-progress-bar__fill {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+
+@media (prefers-color-scheme: dark) {
+  .qz-progress-bar__fill {
+    background: var(--accent);
+    opacity: .5;
+  }
+}
+
+/* 進捗の文言・コンボ・リーチを1行に並べる。.qz-progress-row 自体は縦積みなので、
+   ここで横並びの箱を1枚挟む（挟まないとバッジが行ごとに落ちて縦に伸びる）。 */
+.qz-progress-row__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* コンボ。数字が主役なので、地は薄く・文字は主色のままにする。 */
+.qz-combo {
+  padding: 2px 10px;
+  border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+
+/* リーチ。ゆっくり脈打たせる（0.8Hz ＝ 3Hz 規制の1/3以下）。
+   明暗の反転ではなく不透明度と拡大だけで、光過敏の閾値に近づけない。 */
+.qz-reach {
+  padding: 2px 10px;
+  border-radius: var(--r-pill);
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  animation: qz-reach-pulse 1200ms var(--ease-out) infinite;
+}
+
+@keyframes qz-reach-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .74; transform: scale(1.06); }
+}
+
+/* リーチ中は進捗バーも同じ色へ寄せる。バッジ1個だけだと、視線が問題文に
+   ある間は最後まで気づかれない。 */
+.qz-progress-row.is-reach .qz-progress-bar__fill {
+  background: var(--danger-soft);
+}
+
+/* ★ 動きを止める設定では脈動そのものを消す ★ 全体の prefers-reduced-motion
+   ルール（ファイル末尾）は「0.001ms で終了状態へ飛ばす」だけなので、
+   infinite のアニメでは 0.001ms ごとに終端へ飛び続ける形が残りうる。
+   ここで明示的に none にして、静止した状態を確定させる。 */
+@media (prefers-reduced-motion: reduce) {
+  .qz-reach {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- question card ------------------------------------------------------------------ */
+.qz-question {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.qz-question__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.qz-question__no {
+  color: var(--text-3);
+}
+
+.qz-type-badge {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  background: var(--surface-2);
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+}
+
+/* --- 単語の発音ボタン（英単語デッキのみ。押したときだけ speechSynthesis で読む） --- */
+.qz-pronounce {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 0;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.qz-pronounce:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.qz-pronounce:active { transform: scale(.97); }
+
+/* 図を挟むと本文が複数段落になる（実データは1問あたり最大4段落＋図8枚）。
+   全部を 600 にすると太字の壁になって読み進められないので、地の文は 400 にする。
+   設問そのもの（「〜はどれでしょうか。」）は必ず最後の段落に来るので、そこだけ
+   600 に戻して視線の着地点を作る。段落が1つだけの従来形式の問題は、その1段落が
+   :last-of-type にも該当するので今までどおり 600 のまま変わらない。
+   figure の中の <p>（キャプション・404文言）は子孫であって兄弟ではないため、
+   :last-of-type の数え上げには入らない。 */
+.qz-question__stem {
+  font-size: 17px;
+  font-weight: 400;
+  /* 1.6 → 1.75（本人指摘 2026-09-25：単一改行だけの輸入問題を1行ずつの段落に
+     割ると行間の余白が読みやすさを支える比重が増えるため、解説（.qz-explain__body）
+     と同じ行間にそろえる）。 */
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.qz-question__stem:last-of-type {
+  font-weight: 600;
+}
+
+/* 単一改行だけで区切られた列挙行（views.js の splitStemLines）。text-indent の
+   ハンギングインデントで、折り返した2行目以降だけ「・」の右にそろえる
+   （本人指摘 2026-09-25）。太字にはしない（buildBlocks/buildStemParagraphs が
+   常に --plain も足すので、ここでは字下げだけを持つ）。 */
+.qz-question__stem--bullet,
+.qz-explain__body--bullet,
+.qz-case__text--bullet {
+  padding-left: 1.3em;
+  text-indent: -1.3em;
+}
+
+/* 列挙行が連続するときに包む器（views.js）。カード側の段落間 gap（qz-question は
+   14px・qz-explain/qz-case は10px）を保ったまま、列挙どうしの行間だけ詰める。 */
+.qz-stem-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+/* --- choices -------------------------------------------------------------------------- */
+.qz-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qz-choice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--separator);
+  background: var(--surface);
+  text-align: left;
+  font-size: 15px;
+  transition: background var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    opacity var(--dur) var(--ease-out);
+}
+
+.qz-choice:disabled {
+  cursor: default;
+}
+
+/* 本文は 8 文字分を下回らせない。足りないときは札（.qz-choice__status）が下の行へ回る（2026-10-15。tools/qa-choice-width.mjs） */
+.qz-choice__text {
+  flex: 1 1 8em;
+  min-width: 0;
+  line-height: 1.4;
+  /* 選択肢に改行（\n）があれば改行して見せる（設定コマンドの組など。2026-10-09）。無ければ今までと同じ */
+  white-space: pre-line;
+}
+
+.qz-choice__icon {
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.qz-choice__status {
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.qz-choice--correct {
+  background: var(--success-soft);
+  border-color: var(--success);
+}
+
+.qz-choice--correct .qz-choice__icon {
+  color: var(--success);
+}
+
+.qz-choice--wrong {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+}
+
+.qz-choice--wrong .qz-choice__icon {
+  color: var(--danger);
+}
+
+.qz-choice--dim {
+  opacity: .5;
+}
+
+.qz-choice--selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.qz-choice--selected .qz-choice__icon {
+  color: var(--accent);
+}
+
+/* 選択肢の直下に出る判定行。時間切れ・わからないでは正解の肢が緑になるだけで
+   赤が1つも出ないため、肢の色だけでは正解したようにしか見えない。
+   ★ 色は必ず CSS 変数で書くこと ★ theme-dpg.css は変数を差し替えるだけなので、
+   固定色を書くとテーマ切替とダークモードで浮く。 */
+.qz-verdict {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 9px 12px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  /* 文字は本文色。--danger を --danger-soft の上に直接置くとライトの両テーマで
+     3.8〜4.2:1 しか出ず、13px の本文としては AA（4.5:1）に届かない
+     （.qz-choice__status が本文色なのと同じ理由）。意味の色は縁とアイコンで出す。 */
+  color: var(--text);
+  border-left: 3px solid transparent;
+}
+
+.qz-verdict--correct {
+  background: var(--success-soft);
+  border-left-color: var(--success);
+}
+
+.qz-verdict--correct .qz-verdict__icon { color: var(--success); }
+
+.qz-verdict--wrong,
+.qz-verdict--dontknow,
+.qz-verdict--timeout {
+  background: var(--danger-soft);
+  border-left-color: var(--danger);
+}
+
+.qz-verdict--wrong .qz-verdict__icon,
+.qz-verdict--dontknow .qz-verdict__icon,
+.qz-verdict--timeout .qz-verdict__icon { color: var(--danger); }
+
+.qz-verdict__icon {
+  flex: 0 0 auto;
+  font-size: 15px;
+}
+
+/* --- explain / beginner cards ------------------------------------------------------------ */
+.qz-explain,
+.qz-beginner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qz-explain__head,
+.qz-beginner__head {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* 「解説」見出しと解答時間を1行に並べる。時間は右端の控えめなチップにする
+   （左に置くと見出しより先に目に入り、解説を読む前に数字が気になる）。 */
+.qz-explain__headrow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.qz-explain__time {
+  flex: 0 0 auto;
+  font-size: 12px;
+  color: var(--text-3);
+  background: var(--surface-2);
+  border-radius: var(--r-pill);
+  padding: 2px 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .qz-explain__time {
+    background: var(--surface);
+  }
+}
+
+/* 解説は「読ませる文章」なので、問題文(17px)・選択肢(15px)から落としすぎない。
+   14px / text-2 では設問より2段弱く、本人から「解説の文字が見づらい」と出た
+   （2026-09-16）。選択肢と同じ 15px・本文色まで戻し、行間だけ広めに取る。 */
+.qz-explain__body,
+.qz-beginner__lead {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text);
+  white-space: pre-line;
+}
+
+/* 音声解説の帯（assets/explain-audio.js・2026-10-01。v4: I_音声とお知らせ/mock-音声.html）。部品は v4.css の .audio .eq。
+   流れている間は紫の帯、止めたら白い帯（.audio--stopped）。解説のいちばん上に置き、下に読み進めても画面の上に残る
+   （sticky）。上の見出し（.phead）は #site-navigation の中だけで sticky なので読み進めると画面の外へ出る。
+   帯の top はヘッダーの分を空けず 8px（スマホ・PC とも）。もとの <audio> の見た目は隠し、帯のボタンで操作する。 */
+.qz-explain .qz-explain-audio { margin: 4px 0 12px; top: calc(8px + env(safe-area-inset-top, 0px)); }
+.qz-explain-audio .qz-rich-blocks { display: none; }
+.qz-explain-audio .audio__bar[hidden] { display: none; }
+.qz-explain-audio .audio__acts .btn svg { width: 20px; height: 20px; }
+/* 幅が足りないときは［停止］［最初から］を縦に積む（2026-10-04・設定を2倍に拡大した 187px で横にはみ出していた）。
+   v4.css の 1fr 1fr のままだと、2つの最小幅の合計が箱より広いとき列が箱から押し出される。 */
+.qz-explain-audio .audio__acts { grid-template-columns: repeat(auto-fit, minmax(min(100%, 112px), 1fr)); }
+.qz-explain-audio .audio__txt b { font-weight: 800; }
+.qz-set-preview { display: grid; gap: 6px; margin: 2px 0 6px; }
+.qz-set-preview p { margin: 0; font-size: 14px; color: var(--muted); }
+.qz-set-preview .qz-explain-audio { position: static; }
+/* 3本の棒は流れている間だけ動く（900ms・くり返し）。動きを減らす設定では止める（進みの線は残す）。 */
+@media (prefers-reduced-motion: no-preference) {
+  .qz-explain-audio:not(.audio--stopped) .eq i { animation: eq .9s ease-in-out infinite; }
+  .qz-explain-audio:not(.audio--stopped) .eq i:nth-child(2) { animation-delay: -.3s; }
+  .qz-explain-audio:not(.audio--stopped) .eq i:nth-child(3) { animation-delay: -.6s; }
+  .qz-explain-audio .audio__bar i { transition: width .25s linear; }
+}
+
+.qz-beginner {
+  background: var(--surface-2);
+}
+
+@media (prefers-color-scheme: dark) {
+  .qz-beginner {
+    background: var(--surface);
+  }
+}
+
+.qz-beginner__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.qz-beginner__item {
+  padding-top: 10px;
+  border-top: 1px solid var(--separator);
+}
+
+.qz-beginner__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.qz-beginner__mark {
+  flex: 0 0 auto;
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.qz-beginner__reason {
+  margin-top: 4px;
+  margin-left: 24px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-2);
+  white-space: pre-line;
+}
+
+/* 解説カード先頭（見出しの直下）のコピー欄。★ このアプリの中に AI は入れない ★
+   外部チャットへ貼り付けるための文面と図を渡すだけの帯なので、解説本文の上に
+   区切り線を1本引いて「解説の続きではない」ことを見た目でも分ける。
+   ★ 線は下（border-bottom）★ 帯が上に来た以上、上に引くと見出しと本文の
+   両方に線が挟まって、どちらの区切りか読めなくなる。
+   390px 幅ではボタンが折り返す（flex-wrap）。横に詰めて字を小さくしない。 */
+.qz-share {
+  margin: 0 0 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--separator);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.qz-share__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* .qz-btn--outline が土台。幅は内容に合わせ、狭い画面では折り返させる。
+   border を透明で先に敷いておくのは、成功／失敗のとき border-color だけを
+   差し替えてもレイアウトが動かないようにするため。 */
+.qz-share__btn {
+  flex: 1 1 auto;
+  min-height: 44px;   /* 他のボタン・歯車・止めるボタンと同じタップ目標 */
+  font-size: 13px;
+  border: 1.5px solid transparent;
+}
+
+/* 「AIに解説を頼む」と「画像で解説」は横並び（2026-10-09）。長い文言の前者を広く取り、入りきらない幅（文字2倍の 187px など）では折り返す。
+   基準の幅を em で固定するので、押して文言が「コピーしました」に変わっても幅は動かない。 */
+.qz-share__btn[data-role="copy-ask-ai"] { flex: 1 1 9em; }
+.qz-share__btn[data-role="copy-image"] { flex: 0 1 auto; max-width: 100%; word-break: keep-all; overflow-wrap: anywhere; }  /* 「画像で解／説」と語の途中で切らない（入りきらない幅だけ折る） */
+
+.qz-share__btn[data-state="done"] {
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.qz-share__btn[data-state="fail"] {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* .qz-share__prompt は「いま使う依頼文」の1行。図の注記（__note）とは用が違うので
+   クラスを分ける（検査が __note の先頭を図の注記として引いている）。 */
+.qz-share__hint,
+.qz-share__prompt,
+.qz-share__note {
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 「AIへの依頼文：○○ ▾」は押すと依頼文のシートが開くボタン（2026-10-09）。押せると分かる枠を付け、狭い幅では折り返す。 */
+.qz-share__prompt--btn {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid var(--separator);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.qz-share__prompt--btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* --- practice study ---------------------------------------------------------- */
+/* .qz-practice-question は通常の .qz-question を再利用し、選択肢だけを置かない。
+   ここでは本文と解説に視線を集めるため、追加の装飾カードは作らない。 */
+.qz-practice-question {
+  gap: 12px;
+}
+
+/* 練習の解説フェーズの選択肢（押せない一覧）。ブラウザ既定の小さい <ol> のままだと
+   問題文と大きさ・行間がばらばらに見えるので、回答画面の選択肢と同じ 16px にそろえる（2026-09-19 本人指摘）。 */
+.qz-practice-choices {
+  /* 枠で囲むので行頭の番号（A. B. …）の字下げは要らない。問題文と左右の端をそろえる
+     （本人指摘 2026-09-25：選択肢だけ右にずれて見える）。 */
+  margin: 4px 0 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.qz-practice-choices > li::marker {
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+/* 押せない選択肢を回答画面の .qz-choice と同じ枠・角丸・トークンで見せる
+   （本人指摘 2026-09-25：ただの「A. …」の並びだと正解が本文に埋もれて見づらい）。
+   ボタンではないので状態クラス名は .qz-choice と分ける
+   （:disabled 等の前提を持ち込まない）。 */
+.qz-practice-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--separator);
+  background: var(--surface);
+}
+
+.qz-practice-choice--correct {
+  background: var(--success-soft);
+  border-color: var(--success);
+}
+
+.qz-practice-choice__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre-line;
+}
+
+.qz-practice-choice__mark {
+  flex: 0 0 auto;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.qz-practice-choice__label {
+  flex: 0 0 auto;
+  align-self: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.qz-practice-study__time {
+  align-self: flex-end;
+  margin-top: -6px;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .qz-practice-study__time {
+    background: var(--surface);
+  }
+}
+
+/* --- result: score hero ---------------------------------------------------------------- */
+.qz-result-hero {
+  text-align: center;
+  padding: 28px 20px 24px;
+}
+
+.qz-result-hero__label {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+
+.qz-result-hero__score {
+  font-size: clamp(44px, 12vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.qz-result-hero__slash {
+  color: var(--text-3);
+  font-weight: 400;
+  margin: 0 4px;
+}
+
+.qz-result-hero__pct {
+  margin-top: 6px;
+  font-size: 15px;
+  color: var(--text-2);
+}
+
+/* 所要時間はスコアより一段弱い。正答率と並べて「速いが不正解」を読み取らせる情報で、
+   それ自体が主役ではない。区切り線を1本入れて数字の塊と分ける。 */
+.qz-result-hero__time {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--separator);
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.qz-result-hero__slowest {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* ニアミス（あと1問で満点）。スコアの直下に1行だけ。カードにしないのは、
+   スコアと切り離れた瞬間に「別の情報」に見えて、惜しさが伝わらないため。
+   ★ 色で強さを出さない ★ 13px の文字に --warn を敷くと地とのコントラストが
+   AA を割る（.qz-miss-badge と同じ判断）。地色と太字だけで強める。 */
+.qz-result__nearmiss {
+  margin: -4px 4px 0;
+  padding: 8px 14px;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.qz-complete,
+.qz-review-summary {
+  text-align: center;
+}
+
+.qz-complete__head {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.qz-complete__body,
+.qz-review-summary__body {
+  font-size: 15px;
+  color: var(--text-2);
+}
+
+/* --- result: wrong list ------------------------------------------------------------------ */
+.qz-wrong-list__head {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.qz-wrong-list--open .qz-wrong-list__head {
+  margin-bottom: 10px;
+}
+
+/* 見出しがそのままボタン（既定は閉じる）。buildCaseCard の .qz-case__toggle と同じ並び。タップ領域は 44px 以上。 */
+.qz-wrong-list__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  text-align: left;
+  font-weight: inherit;
+}
+
+.qz-wrong-list__title {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.qz-wrong-list__count {
+  flex: 1 1 auto;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+
+.qz-wrong-list__chev {
+  flex: 0 0 auto;
+  font-size: 14px;
+  color: var(--text-3);
+}
+
+.qz-wrong-list__ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.qz-wrong-list__item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--separator);
+}
+
+.qz-wrong-list__item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.qz-wrong-list__no {
+  flex: 0 0 auto;
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+.qz-wrong-list__preview {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 「2回目」バッジ。色分けはしない — 12px の文字色でコントラストAAを保てる
+   danger 系の色が無く、赤系にすると本文より目立つのに読みにくいという最悪の組合せに
+   なる。地色（警告の淡色）と太字で強さを表す。 */
+.qz-miss-badge {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border-radius: var(--r-pill);
+  padding: 2px 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .qz-miss-badge {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+}
+
+/* --- result actions ------------------------------------------------------------------------ */
+.qz-result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 「このブロックの操作」と「間違い全体の操作」の境目。
+   線1本で、押した結果がブロック単位かセット単位かを区別させる。 */
+.qz-result-actions__sep {
+  height: 1px;
+  background: var(--separator);
+  margin: 4px 0;
+}
+
+/* 区切り線の直下に出る間違いの件数。ホームカードの同じ1行（.qz-set-card__wrong）と
+   文字の大きさ・色を揃える。あちらの負のマージンは付けない（挑戦済み行とくっつける
+   ためのもので、ここでは区切り線と重なる）。 */
+.qz-result-actions__wrong {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+/* 結果画面に置くピル群は setup 画面と違ってカードの外に出るので、
+   ラベルの余白だけ詰める（カード内の .qz-setup__group と同じ見た目にはしない）。 */
+.qz-result-actions .qz-setup__group {
+  gap: 6px;
+}
+
+/* --- practice result --------------------------------------------------------- */
+.qz-practice-result__summary,
+.qz-practice-result__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.qz-practice-result__head,
+.qz-practice-result__list-head {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* 「問題ごとの記録」は折りたたみ（最初は閉じる）。見出しの行全体を押せるようにし、
+   右端の矢印で開閉が分かるようにする。 */
+summary.qz-practice-result__list-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+}
+summary.qz-practice-result__list-head::-webkit-details-marker { display: none; }
+summary.qz-practice-result__list-head::after {
+  content: "";
+  margin-left: auto;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-3px) rotate(45deg);
+  transition: transform .15s ease;
+}
+details[open] > summary.qz-practice-result__list-head::after { transform: translateY(2px) rotate(-135deg); }
+.qz-practice-result__list-count {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+details.qz-practice-result__list:not([open]) { gap: 0; }
+@media (prefers-reduced-motion: reduce) {
+  summary.qz-practice-result__list-head::after { transition: none; }
+}
+
+/* 3つの合計は同じ視線の高さに置く。画面幅が狭くても最小幅を持つので、
+   数字だけが不自然に改行されない。 */
+.qz-practice-totals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.qz-practice-totals__item {
+  min-width: 0;
+  padding: 10px 8px;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  text-align: center;
+}
+
+.qz-practice-totals__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.qz-practice-totals__value {
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.qz-practice-result__ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.qz-practice-result__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--separator);
+}
+
+.qz-practice-result__item:first-child {
+  padding-top: 0;
+}
+
+.qz-practice-result__item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.qz-practice-result__row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.qz-practice-result__no {
+  flex: 0 0 auto;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+.qz-practice-result__preview {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.qz-practice-result__status {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.qz-practice-result__status--ok {
+  color: var(--success);
+}
+
+.qz-practice-result__status--ng {
+  color: var(--danger);
+}
+
+/* 解き直しの正解数。合計時間の並びより前に1行だけ置く。 */
+.qz-practice-result__score {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* 「もう一度練習に戻す」。1問の記録を外すだけなので、時間の行より小さく置く。 */
+.qz-practice-result__forget {
+  align-self: flex-start;
+  margin-left: 30px;
+  min-height: 32px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.qz-practice-result__times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  padding-left: 30px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* --- figure（本文・解説・前文に挟まる表のスクリーンショット） ------------------------------------ */
+.qz-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* 画像そのものをタップターゲットにする。表の中身は縮むと読めないので、
+   インラインは「ここに表がある」ことを示すサムネイルに徹し、読むのは
+   タップで開く原寸ビューア（.qz-lightbox）側に任せる。 */
+.qz-figure__btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border-radius: var(--r-sm);
+}
+
+/* アスペクト比が最大12:1あり、素直に縮めると高さ25pxの帯になって押せない。
+   min-height でタップ領域を確保し、余った分は contain で letterbox する。
+   透過PNGが34枚あるので地を敷かないとダークモードで黒地に溶ける。 */
+/* 幅は width 属性（blocks の w）に任せ、欄の幅で頭打ちにする。100% 固定だと小さい図まで
+   引き伸ばされ、図の中の文字が本文の倍の大きさになっていた（2026-09-19 同梱の過去問）。
+   w が欄より大きい従来のスクリーンショットは、これまでどおり欄の幅いっぱいに出る。 */
+.qz-figure__img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  min-height: 44px;
+  object-fit: contain;
+  object-position: left top;
+  background: #fff;
+  border: 1px solid var(--separator);
+  border-radius: var(--r-sm);
+}
+
+/* 同梱の構成図（tools/content/lib/diagram-svg.mjs が描く fig/*.svg）は、欄より狭いときに真ん中に置く
+   （左寄せだと右が大きく空く。2026-10-10 CCNP の試作を見た本人の指摘）。写真・表の画像はこれまでどおり左寄せ */
+.qz-figure__img[src*="/fig/"][src$=".svg"] {
+  margin-inline: auto;
+}
+.qz-figure:has(.qz-figure__img[src*="/fig/"][src$=".svg"]) .qz-figure__cap {
+  text-align: center;
+}
+
+.qz-figure__cap {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+}
+
+/* 404 のときだけ出す。views.js の onerror は data-broken を立てるだけで
+   （setState を呼ぶと再描画→再読込→再エラーの無限ループになる）、
+   見た目の切り替えはこの2ルールに寄せている。 */
+.qz-figure__fallback {
+  display: none;
+}
+
+.qz-figure[data-broken="1"] .qz-figure__btn,
+.qz-figure[data-broken="1"] .qz-figure__cap {
+  display: none;
+}
+
+.qz-figure[data-broken="1"] .qz-figure__fallback {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 12px;
+  border: 1px dashed var(--separator);
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-3);
+  overflow-wrap: anywhere;
+}
+
+/* 原因（＝読み手が最初に知りたいこと）を本文と同じ強さで出す。
+   以前はファイル名だけを出していたので、読んだ人は必ずデータの欠損を疑いに行った。
+   実際に多いのは認証切れで、正しい次の一手は「再読み込み」。 */
+.qz-figure__fallback-lead {
+  color: var(--text-2);
+}
+
+.qz-figure__fallback-act {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ファイル名は本当に欠けているときだけ意味を持つ情報なので、一段弱くする。 */
+.qz-figure__fallback-src {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* ★ 画像に filter を掛けない ★ 以前はダークモードのときだけ
+   brightness(.86) contrast(1.04) を掛けていた（真っ黒な背景では白地の表が眩しい、
+   という理由）。ドパガキのテーマ（theme-dpg.css）は OS がダークでも常に紙色の
+   明るい配色を出すので、眩しさの前提そのものが無くなった。残っていると、
+   OSをダークにしている人にだけ、貼り付けた画像が原本より14%暗く見える。 */
+
+/* --- lightbox（原寸ビューア） ----------------------------------------------------------------- */
+/* buildQuiz が返す唯一のノード。display:contents なので .qz-page の
+   レイアウト（flex column / gap）には一切影響しない。 */
+.qz-root {
+  display: contents;
+}
+
+/* body にクラスを足して背面をロックする代わりに、はみ出したスクロールをここで止める
+   （app.js が #app の外を触らないという分担を崩さないため）。 */
+.qz-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, .92);
+  overscroll-behavior: contain;
+  padding:
+    calc(env(safe-area-inset-top) + 8px) calc(env(safe-area-inset-right) + 8px)
+    calc(env(safe-area-inset-bottom) + 8px) calc(env(safe-area-inset-left) + 8px);
+}
+
+.qz-lightbox__close {
+  flex: 0 0 auto;
+  align-self: flex-end;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.qz-lightbox__scroll {
+  flex: 1 1 auto;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* max-width:none で原寸のまま出す（縮めたら拡大表示の意味が無い）。
+   はみ出した分は __scroll の横スクロールで読む。 */
+.qz-lightbox__img {
+  display: block;
+  max-width: none;
+  background: #fff;
+  border-radius: var(--r-sm);
+}
+
+.qz-lightbox__hint {
+  flex: 0 0 auto;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255, 255, 255, .62);
+}
+
+/* --- references（解説カード末尾の参照リンク） --------------------------------------------------- */
+.qz-refs {
+  padding-top: 12px;
+  border-top: 1px solid var(--separator);
+}
+
+.qz-refs__head {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+
+.qz-refs__ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1本1本が44pxの独立したタップターゲットなので、境界線で押し間違いを防ぐ。
+   最後の1本だけ線を落とすのは .qz-wrong-list__item と同じ扱い。 */
+.qz-refs__item {
+  border-bottom: 1px solid var(--separator);
+}
+
+.qz-refs__item:last-child {
+  border-bottom: none;
+}
+
+.qz-refs__link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 44px;
+  padding: 6px 0;
+  text-decoration: none;
+  /* URLやタイトルに折り返せない長い連続文字が混じるのでカードから溢れさせない。 */
+  overflow-wrap: anywhere;
+  text-wrap: pretty; /* 最後の行に2文字だけ残さない（2026-10-02） */
+}
+
+.qz-refs__text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--accent);
+}
+
+.qz-refs__host {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+
+/* --- case study（7問共通のシナリオ前文） -------------------------------------------------------- */
+.qz-case {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 20px;
+}
+
+.qz-case__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  text-align: left;
+}
+
+.qz-case__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.qz-case__meta {
+  flex: 0 0 auto;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.qz-case__chev {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+/* 約4,300字＝スマホで11画面ぶん。素で流すと選択肢が画面外へ消えるので、
+   カード内で高さを切って中だけスクロールさせる。トグルは箱の外なので、
+   どこまで読んでも1タップで閉じられる。
+   dvh は使わない（この codebase のトークンに無く、file:// の古い Safari で無視される）。
+   overscroll-behavior は付けない。中を下まで読んだら、続けて画面全体が進む（2026-10-13 本人要望）。 */
+.qz-case__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 58vh;
+  overflow-y: auto;
+  padding: 12px 0 16px;
+  border-top: 1px solid var(--separator);
+}
+
+.qz-case__text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-2);
+  white-space: pre-line;
+  /* 前文の末尾に原文（Google ドキュメント）の長い URL がリンクとして入る。
+     折り返せないと .qz-case__body（overflow: auto）に横スクロールが出る。 */
+  overflow-wrap: anywhere;
+}
+
+/* --- Gist 同期（フッタ） ------------------------------------------------------------------------
+   クラス名を .sync / .sync__* / .footer__btn にしているのは、描画するのが
+   assets/sync.js（ダッシュボードと共有のエンジン）で、そこが出すクラス名が
+   固定だから。トークン名はダッシュボードの styles.css と同一なので、
+   値ではなく変数を参照している限りライト/ダーク両方が自動で揃う。 */
+.qz-foot {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 20px 24px;
+  /* iPhone のホームインジケータに潜り込ませない（viewport-fit=cover のため） */
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+.sync {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sync__status {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.sync__status--error {
+  color: var(--danger);
+}
+
+.sync__input {
+  width: 100%;
+  max-width: 320px;
+  font-size: 16px; /* 16px 未満だと iOS Safari がフォーカス時にズームする */
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--separator);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.sync__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.sync__help,
+.sync__error {
+  width: 100%;
+  max-width: 320px;
+  font-size: 13px;
+  text-align: center;
+  margin: 0;
+  color: var(--text-3);
+}
+
+.sync__error {
+  color: var(--danger);
+}
+
+.footer__btn {
+  font-size: 13px;
+  color: var(--text-3);
+  padding: 6px 4px;
+  border-radius: var(--r-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.footer__btn:hover {
+  color: var(--accent);
+}
+
+.footer__btn:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+/* --- countdown（制限時間） ---------------------------------------------------------------------
+   進捗バーのすぐ下に置く。★ここは app.js が setState を介さず直接書き換える★
+   毎秒 setState すると render() が画面全体を作り直し、選択肢と <img> が
+   毎秒破棄・再生成される（タップ取りこぼし・画像の再取得）。
+   だから CSS 側は「width と data-level が外から書き換わる」前提で組んである。
+   ------------------------------------------------------------------------------------------- */
+/* ★ スクロールしても上部に固定する（以前の版からの変更）★
+   ケーススタディと解説は画面数枚分あり、読んでいる間ずっと残り時間が視界の外に
+   出ていた（＝時間切れが不意打ちになる）。
+   ★ .qz-page（と祖先）に overflow を付けないこと ★ 付けた瞬間 sticky が死ぬ。
+   .qz-page は flex 縦積みで overflow を持たず、.qz-app も持たないので
+   sticky がそのまま効く。★ top は 0 にしない ★ sticky の top は body の
+   padding と無関係に viewport の上端から測るので、viewport-fit=cover の
+   iPhone では 0 だとノッチ／ステータスバーの下に潜って読めなくなる。
+   left/right いっぱいに広げてヘッダー風の帯にするため、負のマージンで
+   ページ左右の余白（--pad-page）ぶんはみ出し、同じ量を padding で戻す。
+   浮いた分だけ本文がバーの裏を通るので、背景は半透明＋blur にして
+   下の文字が透けて見えないようにする。 */
+.qz-countdown {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 calc(-1 * var(--pad-page));
+  padding: 8px var(--pad-page);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--separator);
+}
+
+.qz-countdown__bar {
+  flex: 1;
+  height: 4px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+/* transition は付けない。200ms ごとに width を書き換えるので、
+   遷移を挟むと常に「追いつく途中」の値が見えて、残りとバーがずれる。 */
+.qz-countdown__fill {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--text-3);
+  transform-origin: left center;
+}
+
+/* 折り返させない。幅 390px で「残り 1:00」が2行になると、
+   バーの高さが毎秒変わってページ全体が跳ねる。 */
+.qz-countdown__num {
+  min-width: 3.2em;
+  text-align: right;
+  white-space: nowrap;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+.qz-countdown[data-level="warn"] .qz-countdown__fill { background: var(--warn); }
+.qz-countdown[data-level="warn"] .qz-countdown__num { color: var(--warn); }
+
+.qz-countdown[data-level="danger"] .qz-countdown__fill { background: var(--danger); }
+
+.qz-countdown[data-level="danger"] .qz-countdown__num {
+  color: var(--danger);
+  font-weight: 600;
+  /* 1秒に1回だけ。速い明滅は光過敏性の観点で避ける（毎秒3回を超えさせない）。 */
+  animation: qz-countdown-pulse 1s var(--ease-out) infinite;
+}
+
+@keyframes qz-countdown-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .45; }
+}
+
+/* 「残り 0:42」（2026-10-21）。「残り」と数字は1つのかたまりにして、行の gap（10px）を挟まない。
+   数字は「0:42」の形で桁の幅がそろう（tabular-nums）ので、元の min-width は要らない。 */
+.qz-countdown__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.qz-countdown__text .qz-countdown__num { min-width: 0; }
+.qz-countdown__lead {
+  font-size: 13px;
+  color: var(--text-2);
+}
+.qz-countdown[data-level="warn"] .qz-countdown__lead { color: var(--warn); }
+.qz-countdown[data-level="danger"] .qz-countdown__lead { color: var(--danger); font-weight: 600; }
+/* 残りわずかの！（本人「今の点滅は残し、！と太字を足す」）。色だけに頼らず形でも分かる。点滅はしない（点滅は数字だけ）。 */
+.qz-countdown__alert { display: none; }
+.qz-countdown[data-level="danger"] .qz-countdown__alert {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--danger);
+  color: var(--qz-on-danger, #fff);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* かけた時間（2026-10-21 本人選択の案D「問題の見出しに添える」）。押せない補助なので補助の文字色・紫は使わない。
+   見出しの行（.qz-question__meta）の右端。行が折れた時も右に寄る。数字は app.js が直接書き換える。 */
+.qz-elapsed {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.qz-elapsed__icon { display: inline-flex; width: 1.05em; height: 1.05em; }
+.qz-elapsed__icon svg { width: 100%; height: 100%; }
+
+/* --- 「わからない」 -----------------------------------------------------------------------------
+   ★ question.choices には足さない ★
+   足すと answerIndex / answerIndices / beginner.wrong の添字が全部ずれ、
+   buildBeginnerWrongList が正解肢を誤答欄に出す。独立したボタンとして選択肢の下に置く。
+   見た目も選択肢と揃えない（選択肢の1つに見えると、4択が5択に読める）。
+   ------------------------------------------------------------------------------------------- */
+.qz-dontknow {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px dashed var(--separator);
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.qz-dontknow:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.qz-dontknow:active { transform: scale(.99); }
+
+/* --- 設定パネル ------------------------------------------------------------------------------ */
+.qz-header__gear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.qz-header__gear:hover { background: var(--separator); }
+.qz-header__gear[aria-expanded="true"] { background: var(--accent-soft); color: var(--accent); }
+/* 2026-10-16 区間6の組み込み: 歯車は線の絵（views.js の lineIcon("gear")。出題中の上の帯・紫のカードと同じ1つの絵）。
+   大きさは今までの字の「⚙」の大きさ（1em。棚の画面では 22px）、色はボタンの字の色のまま。 */
+.qz-header__gear-icon { display: inline-grid; place-items: center; vertical-align: middle; }
+.qz-header__gear-icon .dpg-ico { display: block; width: 1em; height: 1em; }
+
+.qz-header { position: relative; }
+
+.qz-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.qz-settings__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.qz-settings__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.qz-settings__note {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.qz-settings__group { display: flex; flex-direction: column; gap: 8px; }
+.qz-settings__details > summary {
+  min-height: 44px;
+  padding: 9px 0;
+  cursor: pointer;
+}
+
+/* iOS 風スイッチ。DESIGN.md のセグメントコントロールと同じく transform で動かす。 */
+.qz-toggle {
+  flex: 0 0 auto;
+  width: 50px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  cursor: pointer;
+  position: relative;
+  transition: background var(--dur) var(--ease-out);
+}
+
+/* ★ 当たり判定だけ 44px へ広げる ★ スイッチ自体（50×30px、paper テーマは 34px 高）を
+   大きくすると見た目が崩れるので、透明な擬似要素を中央に重ねる。::after はつまみが
+   使っているので ::before 側を使う。 */
+.qz-toggle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+.qz-toggle::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.qz-toggle[aria-pressed="true"] { background: var(--success); }
+.qz-toggle[aria-pressed="true"]::after { transform: translateX(20px); }
+
+.qz-toggle:disabled { opacity: .4; cursor: default; }
+
+/* --- 全問正解の演出（パチンコ風） ---------------------------------------------------------------
+   ★ このオーバーレイは #app の外（document.body 直下）に載る★
+     中に置くと render() の root.textContent = "" で演出の途中に消える。
+   金 = そのブロックが満点 / 虹 = セッション・練習を丸ごと満点（虹＝確定の作法）。
+   ------------------------------------------------------------------------------------------- */
+.qz-fanfare {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: none;
+  background: rgba(8, 4, 0, .82);
+  cursor: pointer;
+  animation: qz-fanfare-in 220ms var(--ease-out) both;
+}
+
+.qz-fanfare--out { animation: qz-fanfare-out 320ms var(--ease-out) both; }
+
+@keyframes qz-fanfare-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes qz-fanfare-out { from { opacity: 1; } to { opacity: 0; } }
+
+/* 放射バースト。連続回転は固定点で3回/秒を超える明暗反転になり得るため使わない。
+   ビューポート等倍の静止レイヤー＋一度きりのフェードで、GPU負荷も抑える。 */
+.qz-fanfare__burst {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-conic-gradient(from 0deg,
+      rgba(255, 214, 102, .72) 0deg 2.6deg,
+      rgba(255, 150, 30, 0) 2.6deg 18deg);
+  -webkit-mask-image: radial-gradient(circle at center,
+      #000 0, rgba(0, 0, 0, .78) 34vmin, transparent 78vmin);
+  mask-image: radial-gradient(circle at center,
+      #000 0, rgba(0, 0, 0, .78) 34vmin, transparent 78vmin);
+  opacity: .78;
+  animation: qz-fanfare-burst-in 620ms var(--ease-out) both;
+}
+
+.qz-fanfare--rainbow .qz-fanfare__burst {
+  background:
+    repeating-conic-gradient(from 0deg,
+      rgba(255, 120, 150, .95) 0deg 3.2deg, rgba(255, 120, 150, 0) 3.2deg 9deg),
+    repeating-conic-gradient(from 4.5deg,
+      rgba(150, 225, 255, .92) 0deg 3.2deg, rgba(150, 225, 255, 0) 3.2deg 9deg),
+    conic-gradient(from 0deg,
+      #ff3b30, #ff9f0a, #ffd60a, #34c759, #0a84ff, #5e5ce6, #ff2d95, #ff3b30);
+  opacity: .68;
+}
+
+@keyframes qz-fanfare-burst-in {
+  from { opacity: .18; }
+  to { opacity: .78; }
+}
+
+/* プレミア（金のうち確率で昇格した回）。金の変種で、赤みを一段足すだけにする。
+   ★ 色は既存トークンと rgba だけで作る ★ ここへ新しい16進を足すと、テーマ側
+   （theme-dpg.css）で上書きできない色がオーバーレイにだけ残る。
+   ★ 明滅は作らない ★ 追加するのは1回きりのフェードと、見出しの入れ替え1回だけ
+   （3回/秒以上の点滅を1つも増やさない）。 */
+.qz-fanfare--premium { background: rgba(26, 2, 2, .86); }
+
+.qz-fanfare--premium .qz-fanfare__burst {
+  background:
+    repeating-conic-gradient(from 0deg,
+      rgba(255, 214, 102, .8) 0deg 2.6deg,
+      rgba(255, 90, 40, 0) 2.6deg 14deg);
+  opacity: .8;
+}
+
+/* 差し替え画像を指定したときは、CSS の放射をやめて画像1枚に任せる。 */
+.qz-fanfare__burst--asset {
+  background-image:
+    var(--qz-fx-burst-image),
+    repeating-conic-gradient(from 0deg,
+      rgba(255, 214, 102, .64) 0deg 2.6deg,
+      rgba(255, 150, 30, 0) 2.6deg 18deg);
+  background-size: cover, auto;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.qz-fanfare__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* 縦長の完成動画は、デスクトップでも上下を切らず1枚の演出盤として見せる。 */
+.qz-fanfare__video--contain { object-fit: contain; }
+
+/* 動画の実再生時刻が結果パネルへ届くまで見出しアニメを0フレームで停止する。
+   再生失敗時はfallbackクラスで即時解放し、CSS＋HTMLだけでも意味を残す。 */
+.qz-fanfare--video-pending .qz-fanfare__title { animation-play-state: paused; }
+
+.qz-fanfare--video-pending.qz-fanfare--video-title-ready .qz-fanfare__title,
+.qz-fanfare--video-pending.qz-fanfare--video-fallback .qz-fanfare__title {
+  animation-delay: 0ms;
+  animation-play-state: running;
+}
+
+/* 開始待ちが1秒を超えたときだけ、見出しを薄く出す（fanfare.js の
+   VIDEO_WAITING_HINT_MS）。動画の開始は最大3秒待つので、その間まっ暗なままだと
+   待っているのか壊れたのか区別がつかない。解放（title-ready）とは別物で、
+   こちらは「まだ待っている」ことだけを見せる。
+   ★ 薄くするのは __plate 側 ★ __title は qz-fanfare-pop が opacity を持つので、
+     アニメーションの値が常に勝って opacity 宣言が効かない。
+   ★ :not(--video-title-ready) が要 ★ waiting クラスは外さない（smoke の
+     classList シムに remove が無い）。付けっぱなしのまま解放すると、
+     本来くっきり出るはずの見出しが .55 のまま残る。 */
+.qz-fanfare--video-pending.qz-fanfare--video-waiting:not(.qz-fanfare--video-title-ready) .qz-fanfare__title {
+  animation-play-state: running;
+}
+
+.qz-fanfare--video-pending.qz-fanfare--video-waiting:not(.qz-fanfare--video-title-ready) .qz-fanfare__plate {
+  opacity: .55;
+}
+
+/* 動画が終わっても閉じない（fanfare.js は ended で dismiss しない）。非ループなので
+   video 要素は最後のコマで静止し、その上に達成見出しが乗ったまま残る。
+   .qz-fanfare--video-ended はその状態を外から読むためのフックで、静止画としては
+   これ以上手を入れる必要が無いため、あえて宣言を持たせていない。 */
+
+.qz-fanfare--video-contained .qz-fanfare__stage::before,
+.qz-fanfare--video-contained .qz-fanfare__stage::after {
+  display: none;
+}
+
+.qz-fanfare--video-contained .qz-fanfare__title {
+  font-size: clamp(48px, 12vmin, 88px);
+}
+
+/* 稲妻。stroke-dashoffset で描く（DESIGN.md のチェックマークと同じ手法）。 */
+.qz-fanfare__bolts {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.qz-fanfare__bolt {
+  fill: none;
+  stroke: #fff6c9;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  filter: drop-shadow(0 0 3px rgba(255, 220, 120, .95));
+  animation: qz-fanfare-bolt 700ms var(--ease-out) both;
+}
+
+@keyframes qz-fanfare-bolt {
+  0% { stroke-dashoffset: 120; opacity: 0; }
+  30% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: .85; }
+}
+
+/* 火花。角度と距離は JS が CSS 変数で渡す（動きは CSS が持つ）。 */
+.qz-fanfare__sparks {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.qz-fanfare__spark {
+  position: absolute;
+  width: var(--size, 6px);
+  height: var(--size, 6px);
+  margin: calc(var(--size, 6px) / -2) 0 0 calc(var(--size, 6px) / -2);
+  border-radius: 50%;
+  background: #fff3c4;
+  box-shadow: 0 0 10px 2px rgba(255, 205, 90, .9);
+  transform: rotate(var(--a, 0deg)) translateX(0);
+  animation: qz-fanfare-spark 1100ms var(--ease-out) var(--delay, 0ms) both;
+}
+
+@keyframes qz-fanfare-spark {
+  0% { transform: rotate(var(--a, 0deg)) translateX(0) scale(.4); opacity: 0; }
+  18% { opacity: 1; }
+  100% { transform: rotate(var(--a, 0deg)) translateX(var(--d, 40vmin)) scale(.2); opacity: 0; }
+}
+
+.qz-fanfare__stage {
+  position: relative;
+  z-index: 2;
+  padding: 0 6vw;
+  text-align: center;
+  animation: qz-fanfare-stage-in 440ms var(--ease-spring) 80ms both;
+}
+
+/* 文字の後ろだけ暗く落とす。これが無いと、放射の明るい帯と金の文字が同じ明度で
+   重なって輪郭が消える（実機で確認済み）。 */
+.qz-fanfare__stage::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150vmin;
+  height: 110vmin;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center,
+      rgba(30, 12, 0, .92) 0%, rgba(24, 10, 0, .72) 38%, rgba(10, 4, 0, 0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 読める中央印を0.94倍から1回だけ着地させる。揺れ・ループは使わない。 */
+@keyframes qz-fanfare-stage-in {
+  from { transform: scale(.94); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.qz-fanfare__plate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.qz-fanfare__plate-img {
+  max-width: min(70vw, 620px);
+  max-height: 24vh;
+  height: auto;
+  object-fit: contain;
+  animation: qz-fanfare-pop 520ms var(--ease-spring) both;
+}
+
+.qz-fanfare__badge {
+  display: inline-block;
+  padding: 5px 16px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, #fff3c0, #f0b429);
+  color: #4a2f04;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-indent: .18em;
+  box-shadow: 0 2px 10px rgba(255, 190, 60, .55);
+  animation: qz-fanfare-pop 420ms var(--ease-spring) both;
+}
+
+.qz-fanfare--rainbow .qz-fanfare__badge {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#171a24, #171a24) padding-box,
+    linear-gradient(90deg, #ff3b30, #ffd60a, #34c759, #0a84ff, #ff2d95) border-box;
+  color: #fff;
+  text-shadow: none;
+  box-shadow: 0 2px 14px rgba(126, 104, 255, .55);
+}
+
+/* 金／クロームの文字。
+   ★ -webkit-text-stroke と background-clip:text は同じ要素で両立しない
+     （縁取りが塗りの上へ乗って文字が潰れる）。だから縁取りは ::before の
+     専用レイヤーに逃がし、本体は塗りだけを担当する。 */
+.qz-fanfare__title {
+  position: relative;
+  display: inline-block;
+  font-size: clamp(54px, 19vw, 132px);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: .02em;
+  background: linear-gradient(180deg,
+      #fffbe8 0%, #ffe9a3 18%, #f5c344 40%,
+      #a9700f 52%, #ffe07a 60%, #f0b02c 80%, #7c4c06 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* ★ paint-order: stroke fill が要（Safari 11+ / Chrome 116+）★
+     これが無いと縁取りが塗りの上へ乗る。「全問正解」は画数が多く、
+     7px の縁取り同士が字の内側で溶けて、文字全体が黒い塊になる（実機で確認済み）。
+     stroke を先に塗れば、縁は字の外側にだけ残って読める。
+     ::before に縁取り専用の層を敷く手もあるが、負の z-index は親の背景
+     （＝background-clip:text で切り抜いた金グラデ）より後ろへ回るので、
+     層が増えるだけで同じ問題が残る。 */
+  -webkit-text-stroke: clamp(3px, .75vmin, 7px) #24160a;
+  paint-order: stroke fill;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .6));
+  animation: qz-fanfare-pop 560ms var(--ease-spring) 60ms both;
+}
+
+.qz-fanfare--rainbow .qz-fanfare__title {
+  background: linear-gradient(180deg,
+      #ffffff 0%, #ffd0e8 14%, #ff8ad0 28%, #9b7bff 44%,
+      #57c8ff 58%, #5ce6a6 72%, #ffe066 86%, #ff7a59 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* プレミアの見出しは金より赤い。トークンだけで作るので、テーマを替えれば
+   一緒に動く（縁取りと paint-order は上の共通宣言をそのまま使う）。 */
+.qz-fanfare--premium .qz-fanfare__title {
+  background: linear-gradient(180deg,
+      var(--warn) 0%, var(--danger) 52%, var(--warn) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* 2段目（「激アツ」→「プレミア」）へ入れ替えた瞬間だけ、もう一度跳ねさせる。
+   文字だけ差し替わると、演出ではなく描画の事故に見える。 */
+.qz-fanfare--premium-confirmed .qz-fanfare__title {
+  animation: qz-fanfare-pop 420ms var(--ease-spring) both;
+}
+
+/* 動画に達成語が焼き込んである納品物（manifest の videoHasTitle）では、
+   HTML の見出しを視覚的にだけ伏せる。読み上げからは外さない
+   （aria-labelledby がこの見出しを指しているので、消すと名前の無い dialog になる）。
+   ★ 動画が失敗した回は自動で元へ戻る ★ fanfare.js は付けたクラスを外さない
+   （smoke の classList シムに remove が無い）ので、fallback クラスとの
+   組み合わせでこの規則の方を外す。 */
+.qz-fanfare--video-has-title.qz-fanfare--has-video:not(.qz-fanfare--video-fallback) .qz-fanfare__plate {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.qz-fanfare__sub {
+  font-size: clamp(15px, 4.6vw, 22px);
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #ffe9ae;
+  text-shadow: 0 2px 10px #000, 0 0 24px rgba(0, 0, 0, .9);
+  animation: qz-fanfare-pop 520ms var(--ease-spring) 160ms both;
+}
+
+.qz-fanfare--rainbow .qz-fanfare__sub { color: #fff; }
+
+@keyframes qz-fanfare-pop {
+  from { transform: scale(.42); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* 演出は自動で消えないので、このボタンが唯一の「終わらせ方」の表示になる。
+   明るい動画のフレームに重なっても読めるよう、下地と枠を薄くしすぎない。 */
+.qz-fanfare__close {
+  position: absolute;
+  left: 50%;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 10px 26px;
+  border: 1px solid rgba(255, 255, 255, .58);
+  border-radius: var(--r-pill);
+  background: rgba(0, 0, 0, .62);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .45);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  animation: qz-fanfare-in 300ms var(--ease-out) 420ms both;
+}
+
+.qz-fanfare__close:hover { background: rgba(0, 0, 0, .78); }
+
+/* reduce のときは静止画にする。全体の prefers-reduced-motion ルールでも
+   アニメは止まるが、そちらは「終了状態へ飛ばす」だけなので、回転や揺れの
+   最終状態が意図と違う層をここで明示的に殺しておく。 */
+.qz-fanfare--still .qz-fanfare__burst { animation: none; }
+.qz-fanfare--still .qz-fanfare__stage { animation: none; }
+
+.qz-fanfare--still .qz-fanfare__title,
+.qz-fanfare--still .qz-fanfare__badge,
+.qz-fanfare--still .qz-fanfare__sub,
+.qz-fanfare--still .qz-fanfare__plate-img {
+  animation: none;
+  transform: none;
+  opacity: 1;
+}
+
+/* Windows の強制カラーモードでは透明なグラデーション文字が消えるため、
+   演出の意味を担う3要素をシステム色の通常文字へ戻す。 */
+@media (forced-colors: active) {
+  .qz-fanfare__title,
+  .qz-fanfare--rainbow .qz-fanfare__title,
+  .qz-fanfare__sub,
+  .qz-fanfare--rainbow .qz-fanfare__sub {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+    -webkit-text-stroke: 0;
+    filter: none;
+    text-shadow: none;
+  }
+
+  .qz-fanfare__badge,
+  .qz-fanfare--rainbow .qz-fanfare__badge,
+  .qz-fanfare__close {
+    border: 2px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+    text-shadow: none;
+  }
+}
+
+/* --- reduced motion --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* --- 本棚（作成・残り枠・購入シート・デッキ操作） ------------------------------- */
+.qz-library {
+  gap: 10px;
+}
+
+.qz-library__row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.qz-library__quota {
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.qz-library__usage {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--warn);
+}
+
+.qz-library__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+/* 文中リンク風のボタン。カードの主役（青い塗り）を増やさないための控えめな導線。
+   ★ 見た目（13px・下線・枠なし）は変えない ★ 変えると .qz-btn の全幅の塗りへ
+   戻ったのと同じことになる。高さだけ 44px を確保して押し損ねを減らす。 */
+.qz-link {
+  background: none;
+  padding: 6px 0;
+  min-height: 44px;
+  font-size: 13px;
+  color: var(--text-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 押せるのに反応しないリンクにしない。:disabled の見た目は .qz-btn にしか
+   無かったので、broken のときの .qz-link が「押せるように見えて無反応」だった。 */
+.qz-link:disabled {
+  opacity: .4;
+}
+
+.qz-link--danger {
+  color: var(--danger);
+}
+
+.qz-purchase {
+  gap: 10px;
+}
+
+.qz-purchase__title {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.qz-purchase__lead,
+.qz-purchase__note {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.qz-purchase__note {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.qz-purchase__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.qz-purchase__consent input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+
+.qz-purchase__plans {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.qz-purchase__plan {
+  flex-direction: column;
+  gap: 2px;
+  min-height: 60px;
+  padding: 8px 6px;
+}
+
+.qz-purchase__plan-label {
+  font-size: 13px;
+}
+
+.qz-purchase__price {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+@media (max-width: 420px) {
+  .qz-purchase__plans {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.qz-set-card__actions {
+  display: flex;
+  gap: 16px;
+  margin-top: -4px;
+}
+
+.qz-set-card__license {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+/* 個人販売・段階A向け（本人決定 2026-09-19）: 本棚カードの「この問題集について」。
+   toggle は .qz-link の見た目に乗せるので、ここでは箱と本文だけ足す。 */
+.qz-set-card__about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.qz-set-card__about-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 100%;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-3);
+  overflow-wrap: anywhere;
+}
+
+.qz-set-card__about-desc {
+  white-space: normal;
+}
+
+.qz-set-card__delete {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.qz-set-card__delete-note {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--danger);
+}
+
+
+/* --- 法務フッタ（#app の外・ETS 免責と規約への導線） ---------------------------- */
+.qz-foot--legal {
+  max-width: var(--maxw);
+  margin: 24px auto 0;
+  padding: 16px var(--pad-page) 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--text-3);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.qz-foot__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.qz-foot__links a {
+  color: var(--text-2);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 6px 0;
+}
+
+/* 文字入力型の穴埋め。既存テーマの文字色・背景色を継承する。 */
+.qz-cloze-form { display: grid; gap: 12px; }
+.qz-cloze-form label { display: grid; gap: 8px; }
+.qz-cloze-input { box-sizing: border-box; width: 100%; min-width: 0; padding: 12px; font: inherit; color: inherit; background: var(--paper, #fcfbf9); border: 1px solid currentColor; border-radius: 6px; }
+.qz-cloze-form p, .qz-cloze-result p { overflow-wrap: anywhere; }
+.qz-cloze-input:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+
+.qz-book-cover { display: block; width: 100%; aspect-ratio: 16 / 5; object-fit: cover; border-radius: 10px; margin-bottom: 16px; }
+
+/* --- 自分の解説（外部AIの回答を貼ったものも含め、1問ごとに貯める欄） ------------------------------
+   解説より前（上の「次へ」の直下）に置くカード。上から「画像 → 文章」。
+   ボタンは .qz-btn ＋ .qz-share__btn をそのまま使う（flashButton が書き換える
+   data-state の見た目を1箇所に保つため、ここで独自のボタンを作らない）。 */
+.qz-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qz-notes__head {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* 読み取りに失敗した／クリップボードを読めなかったときの一行。role="status" が
+   付くのはこの要素だけなので、見た目も本文と混ざらないようにする。 */
+.qz-notes__status {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--danger);
+}
+
+/* 編集中の文字数。貼り付けた下書きには textarea の maxLength が効かないので、
+   保存時に末尾が切られることをここで先に伝える。 */
+.qz-notes__count {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+/* --- 3つのカード（みんなの解説・自分の解説・解説）の開け閉め（2026-10-01） ----------------------
+   見出し（.qz-fold__head）は押せるボタン（aria-expanded）。閉じたら見出し以外を display:none で隠すだけ
+   （DOM には残る＝音声解説の再生と「AIに聞く」・コピーの道具が消えない）。
+   ★ 音声解説の帯（.qz-explain-audio）は閉じていても出す ★ 流れている間に［停止］を押せるように。
+   見出しの要素はカードの直下の子（> で見ている。explain-audio.js の place() も同じ）。 */
+.qz-fold[data-fold="closed"] > :not(.qz-fold__head):not(.qz-explain-audio) { display: none; }
+
+.qz-fold__btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.qz-fold__btn:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: 6px; }
+
+/* ★ 言葉は縮めない ★ 閉じたカードの要約（.qz-fold__summary）が長いと、言葉の方が先に縮んで「解／説」と1文字幅に潰れた
+   （2026-10-02 スマホ総点検）。縮むのは要約（… で切る）の側だけ。 */
+.qz-fold__label { flex: 0 0 auto; white-space: nowrap; }
+
+/* 閉じたときだけ出る短い要約（あふれたら … で切る）。 */
+.qz-fold__summary {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+
+.qz-fold__chev {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin: 0 4px 3px auto;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform .15s ease;
+}
+
+.qz-fold__btn[aria-expanded="false"] .qz-fold__chev { margin-bottom: 0; transform: rotate(-45deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .qz-fold__chev { transition: none; }
+}
+
+/* 見出しの行（解説カードは時間のチップと並ぶ）の中でボタンが残りの幅を取る。 */
+.qz-explain__headrow > .qz-explain__head { flex: 1 1 auto; min-width: 0; }
+
+/* みんなの解説の見出しは 19px・太字（件数の small を後ろに並べる）。 */
+.qz-community .ex__h > .qz-notes__head { flex: 1 1 100%; min-width: 0; }
+.qz-community .ex__h .qz-fold__btn { gap: 6px; }
+.qz-community .ex__h .qz-fold__btn small { flex: none; margin-left: 0; }
+.qz-community .ex__h .qz-fold__chev { margin-left: auto; }
+
+/* 保存ボタンの下の案内とスイッチ「みんなの解説にも載せる」（2026-10-01。2026-10-03 に向きを変え、横に「ルール」を置いた）。小さく、でも毎回見える。 */
+.qz-notes__share {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.qz-notes__share-line {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+.qz-notes__share-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 16px;
+  max-width: 100%;
+}
+
+.qz-notes__rules-btn {
+  min-height: 44px;
+  padding: 0 4px;
+  font-size: 13px;
+}
+
+/* 「ルール」を押すと開く小さなシート（投稿のルール5項目）。文字は本文色で、ふち取りの箱。 */
+.qz-notes__rules {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--control-border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.qz-notes__rules[hidden] { display: none; }
+
+.qz-notes__rules-lead { margin: 0 0 4px; font-weight: 700; }
+
+.qz-notes__rules-list { margin: 0; padding-left: 1.3em; }
+
+.qz-notes__rules-list li + li { margin-top: 4px; }
+
+.qz-notes__rules-more { margin: 6px 0 0; }
+
+.qz-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.qz-switch:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: 12px; }
+
+.qz-switch__track {
+  position: relative;
+  flex: none;
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--control-border);
+  transition: background-color .15s ease;
+}
+
+.qz-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform .15s ease;
+}
+
+.qz-switch[aria-checked="true"] .qz-switch__track { background: var(--accent); }
+.qz-switch[aria-checked="true"] .qz-switch__thumb { transform: translateX(16px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .qz-switch__track, .qz-switch__thumb { transition: none; }
+}
+
+/* 自分の解説の下の1行。載せているとき（posted）は静かな色、載らない理由（reason）は本文と同じ色で小さく。 */
+.qz-notes__share-status {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+.qz-notes__share-status--posted { color: var(--success); font-weight: 700; }
+
+/* 消えた解説の控えの1行（［戻す］［捨てる］）。文と小さな下線ボタンを折り返しながら並べる。 */
+.qz-notes__trash {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 12px;
+}
+.qz-notes__trash-error { color: var(--danger); }
+
+.qz-notes__images {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.qz-notes__image {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 貼り付け先。clipboard.read() を拒否される端末ではここへフォーカスして
+   長押し／Ctrl+V する。中身は常に空（views 側が beforeinput を飲む）なので、
+   案内文は ::before で描く＝ユーザーが消せるテキストを置かない。 */
+.qz-notes__drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 1.5px dashed var(--separator);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--text-3);
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+  /* 文字は入らないので、点滅するキャレットは出さない（入力欄と誤解される）。 */
+  caret-color: transparent;
+}
+
+.qz-notes__drop::before {
+  content: "ここを長押し／Ctrl+V で画像を貼り付け";
+}
+
+.qz-notes__drop:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .qz-notes__drop {
+    background: var(--surface);
+  }
+}
+
+@media (forced-colors: active) {
+  .qz-notes__drop {
+    border-color: ButtonText;
+    color: CanvasText;
+  }
+}
+
+/* 本文は解説（.qz-explain__body）と同じ大きさ。中身は note-markdown.js で
+   段落・見出し・箇条書きに割ってあるので、空白の保存（pre-wrap）はしない
+   ＝余白は各ブロックの margin が作る。単独改行は views が <br> にする。
+   長い URL や英単語はどこでも折る。 */
+.qz-notes__body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* note-markdown.js が無い環境（旧 index.html）で落ちる素の1段落。
+   割っていないので、ここだけは改行と空行を字面どおり残す。 */
+.qz-notes__plain {
+  white-space: pre-wrap;
+}
+
+/* --- 貼り付けた Markdown の見た目 ------------------------------------------------------ */
+/* 見出しは h4/h5/h6（文書構造は本文の下の段）。大きさは 17/16/15px で、
+   問題文と選択肢の間に収める＝解説の中だけで階層が分かればよい。 */
+.qz-md__h {
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 14px 0 6px;
+}
+
+.qz-md__h--1 {
+  font-size: 17px;
+}
+
+.qz-md__h--2 {
+  font-size: 16px;
+}
+
+.qz-md__h--3 {
+  font-size: 15px;
+}
+
+.qz-notes__body > :first-child {
+  margin-top: 0;
+}
+
+.qz-md__p {
+  margin: 0 0 10px;
+}
+
+.qz-md__list {
+  padding-left: 1.4em;
+  margin: 0 0 10px;
+}
+
+.qz-md__list li {
+  margin: 4px 0;
+}
+
+.qz-md__list .qz-md__list {
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+.qz-md__quote {
+  margin: 0 0 10px;
+  padding: 6px 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--r-sm);
+}
+
+.qz-md__rule {
+  border: 0;
+  border-top: 1px solid var(--separator);
+  margin: 12px 0;
+}
+
+/* 表。外側の div が横スクロールを受け持つ＝幅のある表でもページ自体は横にあふれない。
+   セルに min-width を持たせ、日本語が1字ずつ縦に割れないようにする（2026-10-11）。 */
+.qz-md__table-wrap {
+  margin: 0 0 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.qz-md__table {
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.qz-md__table th,
+.qz-md__table td {
+  min-width: 6em;
+  padding: 6px 10px;
+  border: 1px solid var(--separator);
+  text-align: left;
+  vertical-align: top;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.qz-md__table th {
+  background: var(--surface-2);
+  font-weight: 600;
+}
+
+.qz-md__table .qz-md__cell--center {
+  text-align: center;
+}
+
+.qz-md__table .qz-md__cell--right {
+  text-align: right;
+}
+
+/* 「↓」だけの行。AIが記憶の道筋を縦に並べるときの継ぎ目なので、
+   本文と同じ強さで出すと行数だけが増えて読みが止まる。 */
+.qz-md__arrow {
+  margin: 2px 0;
+  text-align: center;
+  color: var(--text-3);
+}
+
+.qz-notes__body strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* 図（```svg の囲み）。AI は白地の前提で描くので、ダークテーマでも背景は白のまま（2026-10-14）。 */
+.qz-md__fig {
+  margin: 12px auto;
+  text-align: center;
+}
+
+.qz-md__svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid var(--separator, rgba(0, 0, 0, .12));
+}
+
+.qz-md__svg-fail {
+  margin: 8px 0;
+  font-size: .85em;
+  color: var(--text-2, #65594d);
+}
+
+.qz-md__code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .92em;
+  padding: 1px 4px;
+  background: var(--surface-2);
+  border-radius: 4px;
+}
+
+.qz-notes__body--clamped {
+  max-height: 14em;
+  overflow: hidden;
+  /* 下端をぼかして「まだ続きがある」ことを示す。切り落としの直線だと、
+     そこで終わっているのか畳まれているのかが読めない。 */
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+}
+
+/* align-self は付けない。畳んだ状態の操作は .qz-notes__tools（row）の中に並ぶので、
+   flex-start は交差軸（＝縦方向）に効いて高さが揃わなくなる。 */
+.qz-notes__more {
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 13px;
+}
+
+/* 畳んだ状態（B）と編集中（C）の操作を並べる横1行。値は .qz-library__links と
+   同じに揃える（同じ「文中リンク風の並び」を2種類つくらない）。 */
+.qz-notes__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+}
+
+/* 「別タブで開く」の出し入れは CSS で切る（matchMedia で JS から出し入れすると、
+   views が画面幅という状態を持つことになる）。
+   ★ !important が要る ★ theme-dpg.css:114 の
+   :root[data-quiz-theme="paper"] .qz-link { display: inline-flex } が詳細度で勝ち、
+   これが無いと 375px でも出てしまう（実機で確認済み）。theme-dpg.css は
+   design/dpg/ から生成されるファイルなので、あちらを手で直すと
+   tools/build-theme.mjs --check が落ちる。 */
+.qz-notes__tab {
+  display: inline-flex !important;
+}
+
+/* 2026-10-08 本人依頼: ブラウザではスマホの幅でも出す（狭い窓で開いて、別タブ・別の窓で並べて読む）。
+   iOS アプリの殻の中は別タブが無いので出さない（native-shell.js が html.is-native を付ける）。 */
+html.is-native .qz-notes__tab {
+  display: none !important;
+}
+
+.qz-notes__empty {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+/* assets/editor.css は遅延読み込みでこの画面には来ないので、入力欄の値を写す。 */
+.qz-notes__textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 10em;
+  padding: 10px 12px;
+  border: 1px solid var(--separator);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+/* iOS Safari は 16px 未満の入力欄にフォーカスすると画面を勝手に拡大する
+   （戻すのは手動。本人の常用環境が iPhone なのでここだけ大きくする）。 */
+@media (max-width: 480px) {
+  .qz-notes__textarea {
+    font-size: 16px;
+  }
+}
+
+.qz-notes__file {
+  display: none;
+}
+
+/* --- コミュニティ解説（同梱教材だけ。本人決定 2026-09-25） -------------------------
+   第2版（Cowork v4・2026-10-01）: 部品は assets/v4.css の H 第2版（.xnote .xvote .xfig .nextbar .undo …）。
+   v4.css は v3 のモックの名前の色（--primary・--line・--border など）で書いてあるので、この画面の色（theme-dpg.css の
+   --accent・--separator など。値は同じ）をカードの中だけで写す。新しい色は作らない（--line・--frame・--primary-soft-2 は
+   勉強ログ（log.css）に既にある値）。ボタン（.btn）・下線の文字ボタン（.linkbtn）・顔の丸（.avatar）も v3 の base.css と
+   同じ形をカードの中だけに置く（この画面の .qz-btn とは別物。v4.css の .nextbar .btn などがそのまま効く）。 */
+.qz-community,
+.qz-explain-audio,
+.qz-set-preview {
+  --primary: var(--accent, #6535b5);
+  --primary-soft: var(--accent-soft, #f3edff);
+  --primary-soft-2: #e9e0ff;
+  --line: #eee5da;
+  --frame: #9166ea;
+  --border: var(--separator, #e5cdb8);
+  --muted: var(--text-2, #65594d);
+  --r-m: var(--r-md, 16px);
+  --r-l: var(--r-lg, 24px);
+  --shadow: var(--shadow-card, 0 8px 30px rgb(124 75 30 / 6%));
+  --btn-grad: linear-gradient(165deg, #9742f5 0%, #6424ed 48%, #441cf0 100%);
+  --btn-shadow: 0 3px 0 #4215a8, 0 6px 12px #6d33d322;
+}
+
+.qz-community .btn,
+.qz-explain-audio .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 10px 20px;
+  border-radius: var(--r-m);
+  border: 1.5px solid var(--control-border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.qz-community .btn svg,
+.qz-explain-audio .btn svg { width: 22px; height: 22px; flex: none; }
+.qz-community .btn--primary,
+.qz-explain-audio .btn--primary { background: var(--btn-grad); border-color: #6125d2; box-shadow: var(--btn-shadow); color: #fff; }
+.qz-community .btn--soft { background: var(--primary-soft); border-color: transparent; color: var(--primary); }
+.qz-community .btn--block { display: flex; width: 100%; }
+.qz-community .btn:disabled,
+.qz-community .xvote__b:disabled,
+.qz-explain-audio .btn:disabled { opacity: .55; cursor: not-allowed; }
+.qz-community .linkbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  border: 0;
+  background: none;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.qz-community .linkbtn--danger { color: var(--danger); }
+/* 顔の丸。解説の API は表示名しか返さないので、名前の1文字目を出す（モックはキャラの絵）。 */
+.qz-community .avatar {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  background: #ece4ff;
+  box-shadow: inset 0 0 0 2px var(--text);
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1;
+}
+.qz-community .note__who .avatar { width: 30px; height: 30px; font-size: 14px; }
+
+/* カードの中の流れ（v4 のモックは margin で間を取るので、カードの flex の gap は使わない）。 */
+.qz-community.ex { display: block; }
+.qz-community .ex__h { margin: 0 0 4px; }
+.qz-community .ex__h .qz-notes__head { margin: 0; font-size: 19px; font-weight: 800; line-height: 1.4; }
+.qz-community .ex__h .qz-notes__head small { margin-left: 6px; font-size: 15px; font-weight: 700; color: var(--muted); }
+.qz-community > .qz-notes__empty,
+.qz-community > .qz-notes__status,
+.qz-community > .qz-community__hidden,
+.qz-community > .xwrite { margin-top: 12px; }
+/* 本文は自分の解説と同じ Markdown（段落・<br> で改行を作る）なので、空白の保存（pre-wrap）はしない。
+   pre-wrap が要るのは、画像だけの解説の決まった1行と、note-markdown.js が無い環境の素の1段落（.qz-notes__plain）だけ。
+   文字の大きさは v4.css の .note__body（16px/1.75）。v4.css が後から読まれるので .qz-notes__body の 15px には負けない。 */
+.qz-community .xnote .note__body,
+.qz-community .note--hidden .note__body { overflow-wrap: anywhere; }
+.qz-community .note__body--imgonly { white-space: pre-wrap; }
+.qz-community .note__body.qz-notes__body > :last-child { margin-bottom: 0; }
+.qz-community .xnote__head .note__who { font-size: 15px; font-weight: 800; }
+.qz-community .xscore b.neg { color: var(--danger); }
+.qz-community .xvote__b { min-height: 44px; }
+/* 画像の1枚目は今の buildFigure（タップで拡大）をカードの幅で。小さな字の「タップで拡大」は下の行に 14px で出す。 */
+.qz-community .xfig .qz-figure { gap: 0; }
+.qz-community .xfig .qz-figure__btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-2);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.qz-community .xfig .qz-figure__img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+}
+.qz-community .xfig .qz-figure__cap { display: none; }
+.qz-community .xnote__mini button { cursor: zoom-in; }
+/* 「続きを読む」で全文 */
+.qz-community .xnote--compact .note__body.is-open { display: block; -webkit-line-clamp: unset; overflow: visible; }
+/* 小さなカードの本文は4行で畳む。中身が Markdown のブロック（段落・見出し・箇条書き）になったので、
+   v4.css の -webkit-line-clamp:4 ではなく、行の高さ4つ分（line-height 1.75）の max-height で切る。
+   切れたときだけ app.js の syncCommunityDom が「続きを読む」を出す。 */
+.qz-community .xnote--compact .note__body:not(.is-open) {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  max-height: calc(4 * 1.75em);
+  overflow: hidden;
+}
+/* いちばん上の1枚は自分の解説と同じ「すべて表示／折りたたむ」で畳む（.qz-notes__body--clamped。2026-10-13）。
+   ボタン行は画像の上。 */
+.qz-community .xnote--top > .qz-notes__tools { margin: 0; }
+/* 画像だけの解説（2026-10-06）の決まった1行。本文ではなく図の下の小さな注記として出す。 */
+.qz-community .note__body--imgonly { font-size: 13px; color: var(--text-2); }
+.qz-community .xnote__readmore[hidden] { display: none; }
+.qz-community .more-list { display: grid; gap: 10px; margin-top: 10px; }
+.qz-community .more-page { width: 100%; }
+.qz-community .note__foot { flex-wrap: wrap; }
+.qz-community .xnote__reasons { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0 4px; font-size: 14px; color: var(--muted); }
+.qz-community .xnote__reasons .linkbtn { padding: 0 8px; font-size: 14px; }
+.qz-community .guest-hint .btn { min-height: 44px; padding: 6px 14px; font-size: 15px; }
+/* ログイン前の1行。ボタンの隣で2行に折れるとき「解／説を書けます」と単語の途中で切れる。行の長さをそろえる（2026-10-02 スマホ総点検）。 */
+.qz-community .guest-hint > span { text-wrap: balance; }
+/* 前の入力欄で投稿した解説を外す1行（buildCommunityMineLine。2026-10-01）。確認の2つは次の行（flex-basis 100%）。 */
+.qz-community .mine-line { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 10px; margin: 12px 0 8px; padding: 4px 8px 4px 14px; border-radius: var(--r-m); background: var(--surface-2); font-size: 15px; line-height: 1.5; }
+/* 文の行を［外す］と同じ高さ（44px）にしておく＝確認の2つは［外す］の真下の行に出る（同じ座標に重ならない）。 */
+.qz-community .mine-line p { flex: 1 1 12em; min-width: 0; min-height: 44px; display: flex; align-items: center; margin: 0; }
+.qz-community .mine-line .mine-acts { flex: 0 0 100%; justify-content: flex-end; margin-top: 0; padding-bottom: 6px; }
+.qz-community .more-toggle span { min-width: 0; }
+.qz-community .nextbar__next { justify-content: space-between; text-align: left; }
+
+/* 動き（G 動き.md の H の行）。👎 → 帯が縦に縮みながら出る 280ms／次の解説が 32px 下からせり上がる 460ms。
+   「次の解説を見る」「前へ」も同じせり上がり。描き直しで最初からやり直さないよう、views.js が負の
+   animation-delay で途中から続ける。動きを減らす設定では動かさない（すぐに入れ替わる）。 */
+@media (prefers-reduced-motion: no-preference) {
+  .qz-community .xnote--rise { animation: xrise .46s var(--ease-ios) both; }
+  .qz-community .undo--new { animation: xshrink .28s var(--ease-out) both; transform-origin: 50% 0; }
+  .qz-community .xvote__b { transition: background-color .22s var(--ease-out), border-color .22s var(--ease-out), color .22s var(--ease-out); }
+}
+
+/* 運営の「非表示中の解説」（buildCommunityHidden）で使う行の部品。 */
+.qz-community__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 0;
+  border-top: 1px solid var(--separator);
+}
+
+.qz-community__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.qz-community__author {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.qz-community__body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text);
+  white-space: normal; /* 本文は Markdown（段落・<br>）で組むので pre-wrap にしない */
+  overflow-wrap: anywhere;
+}
+
+.qz-community__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+}
+
+/* --- 解いている間の独り言（自動聞き取り・本人決定 2026-09-25） -----------------
+   answering の間だけ、問題の上に小さく出す。聞き取り中の表示（🎙＋止める＋最後の1行）。
+   案内だけの行（マイクが使えなかった等）はカードにせず、細い1行の .qz-think-live__hint 単体で出す。
+   「使う/使わない」の確認カードは 2026-10-03 にやめた（問題集の設定の切り替えだけ）。 */
+.qz-think-live {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+}
+
+.qz-think-live__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qz-think-live__badge {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.qz-think-live__label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1 1 auto;
+}
+
+.qz-think-live__preview {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-3);
+  overflow-wrap: anywhere;
+}
+
+.qz-think-live__hint {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+/* ---- PC の2列表示（回答後だけ）本人決定 2026-09-19、2026-10-06・2026-10-07 に右の列の中身を変更 ----
+   右の列 = .qz-side（views.js が「次へ（上）・みんなの解説・自分の解説・解説」を包む箱）。左の列 = それ以外（問題・初心者カード・下の次へ）。
+   1000px 未満と、回答前（.qz-side が無い）は1列のまま。.qz-side はふだん display:contents なので、中の4つは包む前と同じく .qz-page の並びに入る。
+   元: 以前の版の quiz.css にあった .qz-page--split。
+   詳細度に注意: theme-dpg.css の :root[data-quiz-theme="paper"] .qz-page{gap:20px} と
+   .qz-app{max-width:1000px} はどちらも (0,3,0)。ここは (0,4,0) で上書きする。
+   row-gap:0 は必須（grid-template-rows の空の行にも隙間が積まれ、下に余白が溜まる）。
+   縦の間隔は子の margin-bottom で取る。align-items:start が無いと sticky が効かない。 */
+.qz-side { display: contents; }
+/* 2列のとき左の列へ出す「AI に頼む／コピー」と音声の帯の箱（2026-10-07。desktop-keys.js の DpgSplitTools が置く）。
+   カード1枚の中に コピーの欄 → 音声の帯 の順。コピーの欄の下線は帯との区切りなので、帯が無いときは引かない。
+   解説を閉じても（.qz-fold の規則はカードの中だけに効く）この箱は残る。帯の sticky は箱の中だけで効く（左の列は箱より先へ張り付かない）。 */
+.qz-left-tools { display: flex; flex-direction: column; }
+.qz-left-tools .qz-explain-audio { margin: 0; }
+.qz-left-tools .qz-share:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+@media (min-width: 1000px) {
+  /* 2026-10-06: 2列のときは画面の幅を使い切る（両脇の空白がもったいない、という本人要望）。
+     右の列の幅は --dpg-split-col（つまみで変える --dpg-split-w。無ければ全体の 50%）。左は 420px を下回らない。 */
+  :root .qz-app[data-screen]:has(.qz-page--split) {
+    max-width: min(1760px, calc(100vw - 48px));
+  }
+  .qz-app[data-screen] .qz-page.qz-page--split {
+    --dpg-split-col: clamp(300px, var(--dpg-split-w, 50%), calc(100% - 444px));
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--dpg-split-col);
+    grid-template-rows: repeat(16, auto) 1fr;
+    column-gap: 24px;
+    row-gap: 0;
+    align-items: start;
+  }
+  .qz-app[data-screen] .qz-page.qz-page--split > * {
+    grid-column: 1;
+    margin-bottom: 20px;
+  }
+  .qz-app[data-screen] .qz-page.qz-page--split > :last-child {
+    margin-bottom: 0;
+  }
+  /* 右の列。中の4つは縦に 20px 空けて積み、長いとき（解説は長い）は列の中だけでスクロールして最後まで読む。
+     上と左に 8px の内側の余白を取り、同じだけ外へ出す（ボタンの左上に出すキーの札がスクロールの枠で切れないように）。 */
+  .qz-app[data-screen] .qz-page.qz-page--split > .qz-side {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 8px);
+    max-height: calc(100vh - env(safe-area-inset-top, 0px) - 16px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin: -8px 0 0 -8px;
+    padding: 8px 0 8px 8px;
+  }
+  .qz-app[data-screen] .qz-page.qz-page--split > .qz-side > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* 2026-10-16 区間6（関所F Q4 d・評価役B「答えた瞬間に2列へ組み替わり、選択肢が縦1列に跳ぶ。答える前は1行が約50字」）:
+   出題は答える前から2列（views.js が答える前にも .qz-page--split と .qz-page--before を付ける）。左の列は問題（答えた後と同じ幅・選択肢は縦1列）、
+   右の列は答えた後に正誤が出る所の目印の箱（.qz-wait。案内の1行と、desktop-keys.js が移す「わからない」）。答えたら同じ所（右の列の上）に
+   次の問題へ・結論・3つのボタン・タブが出る（.qz-side）。1000px 未満・見開き（折りたたみの端末）では箱を出さない（並びは前のまま）。 */
+.qz-wait { display: none; }
+@media (min-width: 1000px) {
+  .qz-app[data-screen] .qz-page.qz-page--split.qz-page--before > .qz-wait {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--g-s2, 16px);
+    min-width: 0;
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 8px);
+    margin: 0;
+    /* 2026-10-19 区間16 QUIZ（本人の頼み R6）: 案内の1行と「わからない」の箱はやめた（views.js の buildQuizWait は空の入れ物）。
+       右の列の場所だけを取り、枠・地・余白は描かない（列の幅の式は dpg-answer.css の 7) のまま。答えても選択肢が動かない）。
+       2026-10-19 区間17 QUIZ3（関所Q の Q5）: 出題の答える前は、この箱とつまみを出さず問題の列を真ん中に置く（dpg-answer.css の 25)）。 */
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .qz-wait__hint {
+    margin: 0;
+    font-size: var(--g-fs-small, 14px);
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--text-2);
+    text-align: center;
+  }
+  /* 箱の中の「わからない」は箱の地に合わせて白い面（点線の枠・字の大きさ・押せる高さ 47px は今のまま） */
+  .qz-app[data-screen] .qz-page.qz-page--split.qz-page--before > .qz-wait > .qz-dontknow { background: var(--surface); }
+}
+/* 計算用紙を右に出している間（マウスの端末の 1000px 以上・浮いた窓でないとき）は、用紙が右の列を取るので、答える前は1列に戻す
+   （「わからない」は desktop-keys.js がカードの中へ戻す）。用紙は答えると隠れるので、答えた後は今までどおり2列。 */
+@media (min-width: 1000px) and (hover: hover) and (pointer: fine) {
+  html.has-scratch:not(.has-scratch-float) .qz-app[data-screen] .qz-page.qz-page--split.qz-page--before { grid-template-columns: minmax(0, 1fr); }
+  html.has-scratch:not(.has-scratch-float) .qz-app[data-screen] .qz-page.qz-page--split.qz-page--before > :is(.qz-wait, .qz-split-handle) { display: none; }
+}
+
+/* 幅を変えるつまみ（2026-10-06）。1000px 以上・マウスの端末（PC のブラウザと Mac 版）だけ。スマホ・iPhone アプリには出さない。
+   列の隙間（24px）の中央に、ページの高さいっぱいの細い帯として置く。押せる幅は 16px。 */
+.qz-split-handle { display: none; }
+@media (min-width: 1000px) and (hover: hover) and (pointer: fine) {
+  .qz-app[data-screen] .qz-page.qz-page--split > .qz-split-handle {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc(var(--dpg-split-col) + 4px);
+    width: 16px;
+    margin: 0;
+    grid-column: auto;
+    cursor: col-resize;
+    touch-action: none;
+    z-index: 2;
+    border-radius: 8px;
+  }
+  .qz-split-handle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 7px;
+    width: 2px;
+    border-radius: 1px;
+    background: transparent;
+    transition: background .15s ease;
+  }
+  .qz-split-handle:hover::before,
+  .qz-split-handle:focus-visible::before,
+  html.dpg-splitting .qz-split-handle::before { background: var(--accent); }
+  .qz-split-handle:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  /* 握る所の目印。長い問題でもつまみの見える位置に残るよう、帯の中で画面の中ほどに追従させる。 */
+  .qz-split-handle__grip {
+    position: sticky;
+    top: 45vh;
+    display: block;
+    width: 8px;
+    height: 44px;
+    margin-left: 4px;
+    border-radius: 4px;
+    background: var(--separator);
+    box-shadow: inset 2px 0 0 var(--surface), inset -2px 0 0 var(--surface);
+  }
+  .qz-split-handle:hover .qz-split-handle__grip,
+  html.dpg-splitting .qz-split-handle__grip { background: var(--accent); }
+  html.dpg-splitting, html.dpg-splitting * { cursor: col-resize !important; user-select: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qz-split-handle::before { transition: none; }
+}
+
+/* ---- 見開き（折りたたみの端末の内画面を横向きに開いたとき）2026-10-08 ----
+   Duo のような折りたたみの iPhone を開くと、内画面は約 890×626（横向き）で折り目が縦の中央に来る。Safari と WKWebView は
+   折り目の位置を教えてくれないので、画面の幅と高さだけで決める。左ページ＝問題、右ページ＝解説（回答前は静かな紙のカード）。
+   条件: 幅 820〜999px（1000px 以上の PC の2列とは重ならない）・高さ 560px 以上（iPhone の横向きは 440 以下で外れる）・
+   横向き（iPad の縦向きは外れる）・タッチ（PC の狭い窓は pointer:fine で外れる）。
+   溝（32px）の中心は画面（viewport）の中心 = 折り目。中身の箱（body の padding で safe-area を除いた範囲）の中央ではない。
+   右の safe-area（横向きのステータスバーの帯）の分だけ箱が左へ寄っても、溝は画面の中心に置く。左右の列の幅は違ってよい
+   （左は左の safe-area の内側から溝まで、右は溝から右の safe-area の内側まで）。殻が折り目の位置を渡してきたら、その中心に置く。
+   .qz-side（回答後）と .qz-fold-placeholder（回答前）が右ページ。ほかは 1000px 以上の2列と同じ作り（詳細度の理由もそちらのコメント）。
+   描画は CSS だけで決める（JS は幅を見ない）ので、開き方を変えても問題・選んだ状態は保たれる。 */
+.qz-fold-placeholder { display: none; }
+@media (min-width: 820px) and (max-width: 999.98px) and (min-height: 560px) and (orientation: landscape) and (pointer: coarse) {
+  /* --fold-cx = 溝の中心の x（画面の左端から）。既定は画面の中心（50vw）。殻が縦の折り目の位置を渡してきたとき（<html data-fold="vertical">、--dpg-fold-x/w。
+     全開で折り目が active でなくなっても位置は渡る）は、その中心（x + w/2）。溝（--fold-gap）は既定 32px、折り目があれば幅 + 16px 以上。
+     --fold-half = 右ページ（用紙）の左端を中心から離す量。--fold-left-w = 左の列の幅（左の safe-area の内側 = body の padding と、.qz-app の左の余白 20px から溝まで）。
+     body の padding が safe-area を除くので、列の幅は viewport の座標（vw・env）から割り出す。右の列は残り全部（1fr）。 */
+  :root {
+    --fold-gap: 32px;
+    --fold-cx: 50vw;
+    --fold-half: 12px;
+    --fold-left-w: calc(var(--fold-cx) - var(--fold-gap) / 2 - env(safe-area-inset-left, 0px) - 20px);
+  }
+  html[data-fold="vertical"] {
+    --fold-gap: max(32px, calc(var(--dpg-fold-w, 0px) + 16px));
+    --fold-cx: calc(var(--dpg-fold-x) + var(--dpg-fold-w) / 2);
+    --fold-half: max(calc(var(--dpg-fold-w) / 2), 12px);
+  }
+  :root .qz-app[data-screen]:has(.qz-page--fold) {
+    max-width: none;
+  }
+  .qz-app[data-screen] .qz-page.qz-page--fold {
+    display: grid;
+    grid-template-columns: minmax(0, var(--fold-left-w)) minmax(0, 1fr);
+    grid-template-rows: repeat(16, auto) 1fr;
+    column-gap: var(--fold-gap);
+    row-gap: 0;
+    align-items: start;
+  }
+  .qz-app[data-screen] .qz-page.qz-page--fold > * {
+    grid-column: 1;
+    margin-bottom: 20px;
+  }
+  .qz-app[data-screen] .qz-page.qz-page--fold > :last-child {
+    margin-bottom: 0;
+  }
+  /* 右ページ。解説は長いので、右ページの中だけでスクロールして最後まで読む（1000px 以上の .qz-side と同じ）。 */
+  .qz-app[data-screen] .qz-page.qz-page--fold > .qz-side {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 8px);
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px) - 16px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin: -8px 0 0 -8px;
+    padding: 8px 0 8px 8px;
+  }
+  .qz-app[data-screen] .qz-page.qz-page--fold > .qz-side > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .qz-app[data-screen] .qz-page.qz-page--fold > .qz-fold-placeholder {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 8px);
+    min-height: 220px;
+    margin: 0;
+    padding: 24px;
+    box-sizing: border-box;
+    border: 1px dashed var(--separator);
+    border-radius: var(--r-lg);
+    background: var(--surface-2);
+    color: var(--text-2);
+    font-size: 15px;
+    line-height: 1.7;
+    text-align: center;
+  }
+  .qz-fold-placeholder p { margin: 0; }
+  /* .qz-page の外にあるものも折り目をまたがせない（2026-10-08 の監査）。折り目をまたぐと、左の選択肢と右の解説の両方に被る。
+     ・下のメニュー（.appnav。画面の下に浮く丸い帯）: 左ページの中央に置き、幅は左の列以下（440px まで）。左右の余白と列の間の溝（32px）は上の2列と同じ値。
+       nav-compact.css の left:50%・width を (0,2,1) で上書きする（transform の translateX(-50%) と縮小はそのまま）。重なり順は変えない。
+     ・お知らせの帯（.sw-notice など、.qz-app の直下で .qz-page の外にあるもの）: 左ページの幅（列の幅）に収める。 */
+  html:has(.qz-page--fold) .appnav {
+    left: calc((env(safe-area-inset-left, 0px) + 20px + var(--fold-cx) - var(--fold-gap) / 2) / 2);
+    width: min(var(--fold-left-w), 440px);
+  }
+  .qz-app[data-screen]:has(.qz-page--fold) > :not(.qz-page):not(.qz-root) {
+    box-sizing: border-box;
+    max-width: var(--fold-left-w);
+  }
+  /* ページの下のフッター（TOEIC の免責・規約リンク。.qz-foot）も左ページの幅に収める。theme-dpg.css の margin:16px auto 0・max-width:1120px に (0,4,0) で勝つ。
+     箱の左端は body の padding の内側、文字は左の padding（20px）から始まり、右端は左の列の右端。 */
+  :root[data-quiz-theme="paper"]:has(.qz-page--fold) .qz-foot { max-width: calc(var(--fold-left-w) + 40px); margin-left: 0; margin-right: auto; }
+  /* 左の列は 409px で、スマホ（390px）と同じくらい狭い。ヘッダの題名が「…1周」「目」と1文字取り残されないよう、
+     スマホ（max-width:480px）と同じ詰め方（題名 15px・左右の余白 14px・丸いボタンの隙間 0）を当てる。 */
+  :root[data-quiz-theme="paper"] .qz-quiz-head .qz-quiz-head__title { font-size: 15px; line-height: 1.4; }
+  :root[data-quiz-theme="paper"] .qz-app .qz-quiz-head { padding-left: 14px; padding-right: 14px; }
+  .qz-quiz-head .qz-sound-btn { margin-right: 0; }
+}
+
+/* ---- 文字の大きさ（設定）2026-09-19 本人要望 ----
+   既定の standard は theme の値（問題文 17px・選択肢 16px）をそのまま使う。
+   small / large だけここで上書きする。theme-dpg.css の :root[data-quiz-theme="paper"] … は
+   (0,3,0) なので、[data-quiz-theme] も付けて (0,4,0) にして勝たせる。 */
+.qz-text-size {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.qz-text-size__btn {
+  flex: 1 1 0;
+  min-width: 84px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--separator);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.qz-text-size__btn[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.qz-text-size__btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.qz-text-size__sample { line-height: 1; font-weight: 700; }
+.qz-text-size__sample--small { font-size: 14px; }
+.qz-text-size__sample--standard { font-size: 17px; }
+.qz-text-size__sample--large { font-size: 20px; }
+
+:root[data-quiz-text="small"][data-quiz-theme] .qz-question__stem { font-size: 15px; }
+:root[data-quiz-text="small"][data-quiz-theme] .qz-choice,
+:root[data-quiz-text="small"][data-quiz-theme] .qz-practice-choices,
+:root[data-quiz-text="small"][data-quiz-theme] .qz-explain__body { font-size: 14px; }
+:root[data-quiz-text="large"][data-quiz-theme] .qz-question__stem { font-size: 20px; }
+:root[data-quiz-text="large"][data-quiz-theme] .qz-choice,
+:root[data-quiz-text="large"][data-quiz-theme] .qz-practice-choices,
+:root[data-quiz-text="large"][data-quiz-theme] .qz-explain__body { font-size: 18px; }
+
+/* --- 段落ごとの太さ指定と出典（2026-09-19 同梱の過去問） ---------------------------------
+   既定は「最後の段落（＝設問）だけ太字」。過去問は設問の文が先頭に来るので、blocks の strong で
+   段落ごとに指定する。テーマの :root[data-quiz-theme="paper"] .qz-question__stem:last-of-type（0,4,0）
+   より強くするため :root[data-quiz-theme] を付ける。 */
+:root[data-quiz-theme] .qz-question__stem.qz-question__stem--plain,
+:root[data-quiz-theme] .qz-question__stem.qz-question__stem--plain:last-of-type { font-weight: 400; }
+:root[data-quiz-theme] .qz-question__stem.qz-question__stem--strong { font-weight: 600; }
+.qz-question__source { margin: 4px 0 0; font-size: 12px; line-height: 1.5; color: var(--text-2, #6b6b6b); }
+.qz-question .qz-rich-blocks { margin: 4px 0; }
+.qz-question .qz-rich-blocks pre.qz-rich-text { font-size: 14px; line-height: 1.6; padding: 10px 12px; border: 1px solid var(--separator, #d9d4ca); border-radius: 8px; }
+.qz-question .qz-table-scroll table { font-size: 14px; }
+.qz-question .qz-table-scroll td, .qz-question .qz-table-scroll th { padding: 6px 10px; border: 1px solid var(--separator, #d9d4ca); }
+
+/* 運営にだけ見える「非表示中の解説」（2026-09-28） */
+.qz-community__hidden{display:flex;flex-direction:column;gap:10px;margin-top:8px;padding-top:10px;border-top:1px dashed var(--separator)}
+.qz-community__item--hidden{padding:10px 12px;border:1.5px dashed var(--separator);border-radius:var(--r-sm);background:var(--surface-2)}
+.qz-community__item--hidden .qz-community__body{color:var(--text-3)}
+.qz-community__badge{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;font-size:12px;border:1px solid var(--separator);color:var(--text-3)}
+
+
+/* --- 出題中の⚙とシート、音声解説の帯の「自動で流す」（2026-10-04 本人要望） -------------------------
+   ⚙ はスピーカー（.qz-sound-btn）と同じ当たり判定 44px。シートは「ほかのこと…」のシート（.dpg-more-sheet・
+   theme-dpg.css / home-create.css）をそのまま使い、中の行はホームの設定パネルと同じ部品（.qz-settings__row など）。
+   新しい色は作らない（紙色テーマの CSS 変数だけ）。 */
+.qz-quiz-gear { font-size: 18px; color: var(--text-2); }
+
+.qz-quiz-settings {
+  overscroll-behavior: contain;
+  overflow-x: hidden;
+  max-height: min(82vh, 82dvh);
+  box-sizing: border-box;
+}
+.qz-quiz-settings__title { margin: 0 0 4px; font-size: 18px; font-weight: 800; color: var(--text); }
+.qz-quiz-settings__title:focus { outline: none; }
+.qz-quiz-settings__title:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.qz-quiz-settings .qz-settings__note { margin: 0 0 12px; }
+.qz-quiz-settings__body { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.qz-quiz-settings__body .qz-settings__note { margin: 0; }
+.qz-quiz-settings__body .dpg-sound-volume input[type="range"] { width: 100%; min-height: 44px; }
+
+/* 帯の「自動で流す」。ラベルごと押せて、押せる範囲は 44px 以上。 */
+.qz-explain-audio__auto {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+}
+.qz-explain-audio__auto[hidden] { display: none; }
+.qz-explain-audio__auto-input { flex: none; width: 24px; height: 24px; margin: 0; accent-color: var(--primary); cursor: pointer; }
+
+/* スマホ幅では見出しを 15px にして、2行で問題集名が読める量を増やす（2026-10-04）。
+   紙色テーマの 18px（theme-dpg.css）より強い指定にするため .qz-quiz-head を1段足す。 */
+@media (max-width: 480px) {
+  :root[data-quiz-theme="paper"] .qz-quiz-head .qz-quiz-head__title { font-size: 15px; line-height: 1.4; }
+  /* 2026-10-08: ヘッダに ✏️（計算用紙）が増えた分、題名の幅が 46px 狭まる（390px で 160 → 114px）。「Part1・オリジナル問題 — 1周目」が
+     3行になって2行に収まらず「目」が取り残された（qa-quiz-mobile-sweep の⑤）。左右の余白と、丸いボタンどうしの隙間を詰めて題名の幅を戻す。
+     押す所は 44px のまま（隙間は見た目だけ。ボタンどうしは重ならない）。(0,4,0) でテーマの padding:16px 20px に勝たせる。 */
+  :root[data-quiz-theme="paper"] .qz-app .qz-quiz-head { padding-left: 14px; padding-right: 14px; }
+  .qz-quiz-head .qz-sound-btn { margin-right: 0; }
+}
+
+/* ---- 計算用紙（手書きの Canvas。assets/scratchpad.js）2026-10-08 ----
+   用紙の DOM（.qz-scratch）は render の外（body 直下）に1つだけ。出題画面の ✏️ で開閉し、回答後と出題画面以外では隠れる（hidden）。
+   開いている間は scratchpad.js が <html> に has-scratch を付ける。
+   ★ 置き場所は CSS だけで決める（JS は画面の幅を見ない）★
+   ふだん（スマホ・Duo の縦向き・PC）: 画面の下半分に固定。上端は画面の高さのちょうど半分（縦向きの Duo を半分折って机に立てたとき、折り目の真下から下半分）。
+     box-sizing:border-box なので下の safe-area は高さの内側に取り、上端は動かない。出題ページの下には 50dvh の余白を足し、問題と選択肢を上半分でスクロールして読めるようにする。
+   見開き（上の「見開き」と同じ条件）: 右ページに固定（上下いっぱい・左端は折り目の 12px 右）。ページの下の余白は要らない。右ページの回答前のカード（placeholder）は隠す。
+   z-index は下のメニュー（.appnav = 30）より上、設定シートの幕（40）・拡大表示（50）より下。 */
+/* ヘッダの ✏️。開いている間は消音中の札と同じ薄い紫の地にして、押された状態が見えるようにする（aria-pressed と同期）。 */
+.qz-scratch-btn[aria-pressed="true"] { background: var(--accent-soft); }
+.qz-scratch[hidden] { display: none; }
+.qz-scratch {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50dvh;
+  z-index: 35;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-top: 2px solid #e5cdb8;
+  background: #fffdf8;
+  box-shadow: 0 -4px 16px rgba(41, 38, 34, 0.14);
+  /* iOS で指でなぞると、長押しと見なされて用紙ごと文字選択の青が付き、つまみと共有メニューが出た（2026-10-09 Duo の録画で発覚） */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+html.has-scratch .qz-app[data-screen="quiz"] { padding-bottom: calc(50dvh + 48px); }
+.qz-scratch__bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  overflow-x: auto;
+  border-bottom: 1px solid #e5cdb8;
+  background: #fff;
+}
+.qz-scratch__btn {
+  flex: 0 0 auto;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid #ad8973;
+  border-radius: 12px;
+  background: #fff;
+  color: #292622;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.qz-scratch__btn[aria-pressed="true"] { border-color: #6535b5; background: #6535b5; color: #fff; }
+.qz-scratch__btn:disabled { opacity: .4; cursor: default; }
+.qz-scratch__btn[data-role="scratch-close"] { margin-left: auto; }
+/* 紙。うすい罫線だけ。キャンバスは紙いっぱい（大きさが変わると scratchpad.js が描き直す）。 */
+.qz-scratch__paper {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgba(101, 89, 77, 0.12) 31px, rgba(101, 89, 77, 0.12) 32px);
+}
+.qz-scratch__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+/* 回答後の「自分の計算」。紙と同じ色の面に、書いたものを原寸（幅が足りなければ縮めて）で出す。 */
+.qz-scratch-review__img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--separator);
+  border-radius: 10px;
+  background: #fffdf8;
+}
+@media (min-width: 820px) and (max-width: 999.98px) and (min-height: 560px) and (orientation: landscape) and (pointer: coarse) {
+  html.has-scratch .qz-app[data-screen="quiz"] { padding-bottom: 48px; }
+  .qz-scratch {
+    top: 0;
+    bottom: 0;
+    height: auto;
+    left: calc(var(--fold-cx) + var(--fold-half));
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) 0;
+    border-top: 0;
+    border-left: 2px solid #e5cdb8;
+    box-shadow: -4px 0 16px rgba(41, 38, 34, 0.14);
+  }
+  html.has-scratch .qz-app[data-screen] .qz-page.qz-page--fold > .qz-fold-placeholder { display: none; }
+}
+/* 横の折り目の位置が分かるとき（殻の Hinge。native-shell.js が <html> に data-fold="horizontal" と --dpg-fold-y/h を付ける）: 画面の下半分（50dvh）ではなく、
+   折り目の下端から下を用紙にする。縦向きの Duo を半分折って机に立てたとき、折り目の真下から。出題ページの下の余白も用紙の高さに合わせる。見開きの条件のときは上の右ページが優先。 */
+@media not all and (min-width: 820px) and (max-width: 999.98px) and (min-height: 560px) and (orientation: landscape) and (pointer: coarse) {
+  html[data-fold="horizontal"] .qz-scratch { top: calc(var(--dpg-fold-y) + var(--dpg-fold-h)); height: auto; }
+  html[data-fold="horizontal"].has-scratch .qz-app[data-screen="quiz"] { padding-bottom: calc(100dvh - var(--dpg-fold-y) - var(--dpg-fold-h) + 48px); }
+}
+
+/* ---- 計算用紙の PC の形（2026-10-09 本人決定）----
+   条件は幅 1000px 以上・マウスの端末（見開きのつまみ .qz-split-handle と同じ）。スマホ・Duo の折り目の規則（上の2つの節）には触れない。
+   右の列（既定）: 回答前に ✏️ で開くと、画面の右端に上下いっぱいの列として出す。問題・選択肢は左に寄せ、用紙に覆われない（.qz-app の右に列の幅＋24px を空ける）。
+   浮いた窓（.qz-scratch--float。道具の列の［外す］）: 位置と大きさは scratchpad.js が --scratch-x/y/w/h に入れる（prefs の scratchRect）。道具の列をつまむと動き、右下の角で大きさが変わる。
+   ［外す］［右に戻す］・つまむ所（⋮⋮）・右下の角は、この条件でだけ見せる。回答後の［書き足す］（.qz-scratch--append）は右の列が解説なので［右に戻す］を出さない。 */
+.qz-scratch__handle,
+.qz-scratch__grip,
+.qz-scratch__btn[data-role="scratch-float"],
+.qz-scratch__btn[data-role="scratch-dock"] { display: none; }
+@media (min-width: 1000px) and (hover: hover) and (pointer: fine) {
+  :root { --dpg-scratch-col: clamp(360px, 40vw, 720px); }
+  .qz-scratch:not(.qz-scratch--float) {
+    top: 0;
+    bottom: 0;
+    left: auto;
+    right: 0;
+    width: var(--dpg-scratch-col);
+    height: auto;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) 0;
+    border-top: 0;
+    border-left: 2px solid #e5cdb8;
+    box-shadow: -4px 0 16px rgba(41, 38, 34, 0.14);
+  }
+  html.has-scratch:not(.has-scratch-float) .qz-app[data-screen="quiz"] {
+    padding-bottom: 48px;
+    margin-right: calc(var(--dpg-scratch-col) + 24px);
+  }
+  /* キーの案内（desktop-keys.js の .dpgk-hint。右下に固定）が右の列の用紙に重なって、その所に描けなくなるので、列の左へずらす。 */
+  html.has-scratch:not(.has-scratch-float) .dpgk-hint { right: calc(var(--dpg-scratch-col) + 16px); }
+  .qz-scratch.qz-scratch--float {
+    top: var(--scratch-y, 80px);
+    left: var(--scratch-x, auto);
+    right: auto;
+    bottom: auto;
+    width: var(--scratch-w, 520px);
+    height: var(--scratch-h, 520px);
+    padding: 0;
+    border: 2px solid #e5cdb8;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(41, 38, 34, 0.24);
+  }
+  html.has-scratch.has-scratch-float .qz-app[data-screen="quiz"] { padding-bottom: 48px; }
+  .qz-scratch:not(.qz-scratch--float) .qz-scratch__btn[data-role="scratch-float"] { display: inline-block; }
+  .qz-scratch--float:not(.qz-scratch--append) .qz-scratch__btn[data-role="scratch-dock"] { display: inline-block; }
+  .qz-scratch--float .qz-scratch__bar { cursor: move; touch-action: none; }
+  .qz-scratch--float .qz-scratch__btn { cursor: pointer; }
+  .qz-scratch--float .qz-scratch__handle {
+    display: inline-block;
+    flex: 0 0 auto;
+    padding: 0 4px;
+    color: #ad8973;
+    font-size: 18px;
+    letter-spacing: -4px;
+    line-height: 44px;
+  }
+  .qz-scratch--float .qz-scratch__grip {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 22px;
+    height: 22px;
+    cursor: nwse-resize;
+    touch-action: none;
+    background: linear-gradient(135deg, transparent 0 50%, #ad8973 50% 56%, transparent 56% 68%, #ad8973 68% 74%, transparent 74%);
+  }
+}
+
+/* 回答後の「自分のメモ」（PC の2列の左の列・問題カードの下）。スマホ・1列では出さず、今までどおり右の列（display:contents）の「自分の計算」を出す。
+   PC の2列では逆に「自分の計算」を隠す（同じ画面に2つ出さない）。 */
+.qz-page > .qz-scratch-memo { display: none; }
+@media (min-width: 1000px) and (hover: hover) and (pointer: fine) {
+  .qz-app[data-screen] .qz-page.qz-page--split > .qz-scratch-memo { display: block; }
+  .qz-app[data-screen] .qz-page.qz-page--split .qz-scratch-review { display: none; }
+}
+/* 右の列で書いた紙は縦に長い（画面の高さ）。札が左の列を埋めないよう、高さを抑えて縦横比のまま縮める。 */
+.qz-scratch-memo .qz-scratch-review__img { width: auto; max-height: 420px; }
+.qz-scratch-memo__hint { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: var(--text-2); }
+.qz-scratch-memo .qz-share__row,
+.qz-scratch-review .qz-share__row { margin-top: 10px; }
+
+/* 出題中のヘッダの 🗣️（独り言のオン・オフ。2026-10-09）。オフは赤い斜線＋赤い「オフ」（上の .qz-sound-btn[data-off]。2026-10-14 に薄くするのをやめた）。 */
+/* 幅 1000px 未満（スマホ・Duo の外の画面・Duo の見開きの左ページ）の出題画面のヘッダ（2026-10-09 本人選択の案2）:
+   1行目に題名（全幅・1行で末尾「…」）、2行目に右寄せでボタン列（🔈 ✏️ 🗣️ ⚙ トップへ）。押す所は 44px のまま。
+   🗣️ を足すと、題名の横に2行で並べる今の形では 390px で題名が 10 字しか見えず、Duo の見開きでは「…1周」「目」のような1〜2文字の行を作った。
+   1行にすれば取り残しの行は作らず、390px でも 23 字ほど見える（ヘッダは 3px 高くなるだけ）。1000px 以上は今のまま（題名の横にボタン）。
+   練習の「理解する」画面（data-screen="practice-study"）のヘッダは変えない。 */
+@media (max-width: 999.98px) {
+  /* 上下の余白は見本（2026-10-09 に本人が選んだ画像）と同じ 10px・4px。紙色テーマの padding:16px を (0,4,0) で上書きする（2行になった分の高さを抑える）。 */
+  :root .qz-app[data-screen="quiz"] .qz-quiz-head { flex-wrap: wrap; justify-content: flex-end; row-gap: 0; padding-top: 10px; padding-bottom: 4px; }
+  :root .qz-app[data-screen="quiz"] .qz-quiz-head .qz-quiz-head__title {
+    flex: 1 0 100%;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-line-clamp: unset;
+    line-clamp: none;
+  }
+  .qz-app[data-screen="quiz"] .qz-quiz-head .qz-sound-btn { margin-right: 0; }
+}
+/* 依頼文をコピーした後の「次に、自分のメモの画像も貼ってください」（app.js が hidden を外す）。 */
+.qz-share__memo-hint { margin: 8px 0 0; font-size: 14px; line-height: 1.5; font-weight: 700; color: var(--text-2); }
+/* --- 依頼文のシート（2026-10-09 本人決定） -------------------------------------------------------
+   出題中の⚙シート（.qz-quiz-settings）と同じ .dpg-more-sheet を土台にする。body 直下に置くので、
+   ほかの固定の帯（z-index の大きいもの）より前に出す。新しい色は作らない（今使っているものは --accent-soft の淡い紫）。 */
+:root[data-quiz-theme] .qz-prompt-sheet-root .dpg-more-scrim { z-index: 5000; }
+:root[data-quiz-theme] .qz-prompt-sheet-root .qz-prompt-sheet { z-index: 5001; }
+.qz-prompt-sheet {
+  overscroll-behavior: contain;
+  overflow-x: hidden;
+  max-height: min(82vh, 82dvh);
+  box-sizing: border-box;
+}
+.qz-prompt-sheet__body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.qz-prompt-sheet__title { margin: 0; font-size: 18px; font-weight: 800; color: var(--text); }
+.qz-prompt-sheet__title:focus { outline: none; }
+.qz-prompt-sheet__title:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.qz-prompt-sheet__note { margin: 0; font-size: 13px; line-height: 1.6; color: var(--text-2); overflow-wrap: anywhere; }
+.qz-prompt-sheet__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.qz-prompt-sheet__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  min-width: 0;
+  border: 1.5px solid var(--separator);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+.qz-prompt-sheet__row.is-current { background: var(--accent-soft, #f3edff); border-color: var(--accent); }
+.qz-prompt-sheet__pick,
+.qz-prompt-sheet__label {
+  flex: 1 1 8em;
+  min-width: 0;
+  min-height: 48px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.qz-prompt-sheet__pick { cursor: pointer; border-radius: var(--r-md); }
+.qz-prompt-sheet__pick:focus-visible,
+.qz-prompt-sheet__act:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.qz-prompt-sheet__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.qz-prompt-sheet__sub { font-size: 12px; line-height: 1.5; color: var(--text-2); }
+.qz-prompt-sheet__sub:empty { display: none; }
+.qz-prompt-sheet__check { margin-left: auto; color: var(--accent); font-weight: 800; }
+.qz-prompt-sheet__act {
+  flex: 0 1 auto;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+.qz-prompt-sheet__act--text { font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+.qz-prompt-sheet__new { width: 100%; min-height: 48px; }
+.qz-prompt-sheet__field { display: grid; gap: 6px; font-size: 13px; color: var(--text-2); min-width: 0; }
+.qz-prompt-sheet__field input,
+.qz-prompt-sheet__field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1.5px solid var(--separator);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;   /* 16px 未満だと iOS が入力時に画面を拡大する */
+}
+.qz-prompt-sheet__field textarea { resize: vertical; min-height: 9em; }
+.qz-prompt-sheet__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.qz-prompt-sheet__actions .qz-btn { flex: 1 1 auto; min-height: 48px; }
+
+/* --- ドパガキAI の1枚（みんなの解説の先頭。2026-10-14 本人決定。画面は assets/auto-explain-ui.js） -----------------
+   試作（tools/auto-explain-trial/client/client.css）の「待ち時間の見せ方」を製品の色（theme-dpg.css の変数）で。
+   動きは短く切れよく（120〜150ms・linear / ease-out）。動きを減らす設定では動きと動画をやめる。 */
+.qz-community .xai-wrap:empty { display: none; }
+.qz-community .xai-wrap { margin: 0 0 14px; }
+.qz-community .xai { margin: 0; border-color: var(--accent, #6535b5); }
+.qz-community .xai__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.qz-community .xai__avatar { font-size: 12px; letter-spacing: -.02em; }
+.qz-community .xai__badge { padding: 2px 10px; border-radius: 999px; background: var(--accent-soft, #f3edff); color: var(--accent, #6535b5); font-size: 12px; font-weight: 800; }
+/* 作った人がいる1枚の上の行（2026-10-15 本人決定 案B）: 「ドパガキAI」＋小さな2行目「作成：表示名」、右に人の解説と同じ 👍 点数 👎（.xvote / .xscore は v4.css）。 */
+.qz-community .xai__head--creator { flex-wrap: nowrap; min-width: 0; } /* 親の .xnote は grid。min-width を外さないと狭い画面で右の 👎 が枠の余白にはみ出す */
+.qz-community .xai__head--creator .note__who { min-width: 0; }
+.qz-community .xai__names { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.qz-community .xai__names .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qz-community .xai__by { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; font-size: 12px; font-weight: 700; color: var(--muted, #8a7d70); }
+.qz-community .xai-line { margin: 0 0 8px; font-size: 13px; line-height: 1.6; color: var(--text-2, #65594d); display: flex; flex-wrap: wrap; align-items: center; gap: 0 6px; }
+.qz-community .xai-wrap [hidden] { display: none; }
+.qz-community .xai__msg { margin: 0; padding: 6px 10px; border-left: 4px solid var(--separator, #e5cdb8); background: var(--surface-2, #fff3e6); font-size: 13px; line-height: 1.6; color: var(--text-2, #65594d); }
+.qz-community .xai-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+/* gridの本文は表の最小幅より縮め、横スクロールを表の中へ収める。 */
+.qz-community .xai__body { min-width: 0; }
+.qz-community .xai__body > :last-child { margin-bottom: 0; }
+.qz-community .xai__body .xai__seg > :first-child { margin-top: 0; }
+.qz-community .xai__body .qz-md__table { width: 100%; }
+.qz-community .xai__foot { align-items: center; gap: 0 8px; }
+.qz-community .xai__report-msg { font-size: 13px; color: var(--text-2, #65594d); }
+/* 図にできなかった1行（2026-10-19 AIREGEN。Markdown の画像の長い字を本文に出さない。字は14px）。 */
+.qz-community .xai__body .xai__fig-fail { margin: 8px 0; padding: 8px 12px; border: 1px dashed var(--separator, #e5cdb8); border-radius: 10px; background: var(--surface-2, #fff3e6); font-size: 14px; line-height: 1.6; color: var(--text-2, #65594d); overflow-wrap: anywhere; }
+/* ［作り直す］（2026-10-19 AIREGEN 見本。既定はオフ＝本物では出ない。auto-explain-ui.js の regenMode）。左に［作り直す］、右に［おかしい点を報告］。 */
+.qz-community .xai__foot .xai__regen-btn { flex: 0 0 auto; max-width: 100%; margin-right: auto; gap: 4px; padding: 0 14px; border: 1.5px solid var(--control-border, #ad8973); border-radius: 999px; background: var(--surface, #fff); color: var(--primary, #5b24d5); font-size: 14px; font-weight: 800; text-decoration: none; }
+.qz-community .xai__foot .xai__regen-btn:disabled { border-style: dashed; color: var(--text-2, #65594d); cursor: not-allowed; }
+.qz-community .xai__regen-ico { font-size: 16px; line-height: 1; }
+.qz-community .xai__regen { display: grid; gap: 8px; margin: 0 0 10px; padding: 12px; border: 1.5px solid var(--separator, #e5cdb8); border-radius: 14px; background: var(--surface-2, #fff3e6); }
+.qz-community .xai__regen-q { margin: 0; font-size: 14px; font-weight: 800; color: var(--text, #2c211e); }
+.qz-community .xai__regen-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.qz-community .xai__regen-chip { min-height: 44px; padding: 0 12px; border: 1.5px solid var(--control-border, #ad8973); border-radius: 999px; background: var(--surface, #fff); color: var(--text, #2c211e); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; overflow-wrap: anywhere; }
+.qz-community .xai__regen-chip[aria-pressed="true"] { border-color: var(--primary, #5b24d5); background: var(--primary-soft, #f2ebff); color: var(--primary, #5b24d5); font-weight: 800; }
+.qz-community .xai__regen-scopes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 7.5em), 1fr)); gap: 6px; }
+.qz-community .xai__regen-scope { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 56px; padding: 6px 10px; border: 1.5px solid var(--primary, #5b24d5); border-radius: 12px; background: var(--surface, #fff); color: var(--primary, #5b24d5); font: inherit; font-size: 16px; font-weight: 800; cursor: pointer; }
+.qz-community .xai__regen-scope small { font-size: 14px; font-weight: 700; color: var(--text-2, #65594d); }
+.qz-community .xai__regen-scope.is-rec { background: var(--primary-soft, #f2ebff); box-shadow: inset 0 0 0 1px var(--primary, #5b24d5); }
+.qz-community .xai__regen-scope:disabled { border-color: var(--control-border, #ad8973); color: var(--text-2, #65594d); cursor: not-allowed; opacity: .6; }
+.qz-community .xai__regen-scope-l { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 6px; }
+.qz-community .xai__regen-tag { padding: 0 8px; border-radius: 999px; background: var(--primary, #5b24d5); color: #fff; font-size: 14px; font-weight: 800; line-height: 1.6; }
+.qz-community .xai__regen-note { margin: 0; font-size: 14px; line-height: 1.6; color: var(--text-2, #65594d); }
+.qz-community .xai__regen-foot { display: flex; justify-content: flex-end; }
+.qz-community .xai__regen-msg { margin: 0 0 10px; padding: 8px 12px; border-left: 4px solid var(--primary, #5b24d5); background: var(--surface-2, #fff3e6); font-size: 14px; line-height: 1.6; color: var(--text-2, #65594d); }
+.qz-community .xai__regen-msg:focus { outline: 2px solid var(--primary, #5b24d5); outline-offset: 2px; }
+/* 本物の作り直し（2026-10-19）: 失敗の知らせ・知らせの横の押す所・でき上がった後の比べる所（枠の上）。字は14px以上・押す所は44px以上。 */
+.qz-community .xai__regen-msg.is-error { border-left-color: var(--danger, #b23336); color: var(--text, #2c211e); }
+.qz-community .xai__regen-acts { display: flex; flex-wrap: wrap; gap: 6px; margin: -4px 0 10px; }
+.qz-community .xai__regen-acts .xai__regen-act { min-height: 44px; font-size: 14px; font-weight: 800; }
+.qz-community .xai__cmp { display: grid; gap: 8px; margin: 0 0 10px; padding: 12px; border: 1.5px solid var(--primary, #5b24d5); border-radius: 14px; background: var(--primary-soft, #f2ebff); scroll-margin-top: 12px; }
+.qz-community .xai__cmp-title { margin: 0; font-size: 14px; font-weight: 800; line-height: 1.5; color: var(--text, #2c211e); overflow-wrap: anywhere; }
+.qz-community .xai__cmp-tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.5em), 1fr)); gap: 2px; padding: 3px; border: 1.5px solid var(--control-border, #ad8973); border-radius: 14px; background: var(--surface, #fff); }
+.qz-community .xai__cmp-tab { min-height: 44px; min-width: 44px; padding: 0 10px; border: 0; border-radius: 10px; background: transparent; color: var(--text-2, #65594d); font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; overflow-wrap: anywhere; }
+.qz-community .xai__cmp-tab[aria-pressed="true"] { background: var(--primary, #5b24d5); color: #fff; }
+.qz-community .xai__cmp-tab:disabled { cursor: not-allowed; opacity: .7; }
+.qz-community .xai__cmp-acts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9em), 1fr)); gap: 6px; }
+.qz-community .xai__cmp-adopt, .qz-community .xai__cmp-keep { min-height: 44px; min-width: 0; padding: 4px 12px; border-radius: 12px; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; overflow-wrap: anywhere; }
+.qz-community .xai__cmp-adopt { border: 1.5px solid var(--primary, #5b24d5); background: var(--primary, #5b24d5); color: #fff; }
+.qz-community .xai__cmp-keep { border: 1.5px solid var(--control-border, #ad8973); background: var(--surface, #fff); color: var(--text, #2c211e); }
+.qz-community .xai__cmp-adopt:disabled, .qz-community .xai__cmp-keep:disabled { cursor: not-allowed; opacity: .7; }
+.qz-community .xai__cmp-note { margin: 0; font-size: 14px; line-height: 1.6; color: var(--text-2, #65594d); overflow-wrap: anywhere; }
+.qz-community .xai__steps li[hidden] { display: none; }
+@media (max-width: 260px) {
+  .qz-community .xai__cmp { padding: 8px; }
+  .qz-community .xai__cmp-tab { padding: 0 6px; }
+  .qz-community .xai__foot .xai__regen-btn { padding: 4px 8px; }
+  .qz-community .xai__regen { padding: 8px; }
+  .qz-community .xai__regen-chip, .qz-community .xai__regen-scope { padding-left: 8px; padding-right: 8px; border-radius: 12px; }
+}
+/* 上の行の 👍 点数 👎（2026-10-19 AIREGEN）: 枠が狭いとき（PC の2列の右の列・200% の拡大）に、👎 が枠の外へはみ出していた（前から）。
+   上の行の幅で、字の札（役に立った・役に立たなかった）を隠す（スマホと同じ形。読み上げの名前は aria-label のまま）。とても狭いときは次の行へ。 */
+.qz-community .xai__head { container-type: inline-size; }
+@container (max-width: 460px) {
+  .qz-community .xai__head .xvote__l { display: none; }
+  .qz-community .xai__head .xvote__b { padding: 0 9px; }
+}
+@media (max-width: 260px) {
+  .qz-community .xai__head--creator { flex-wrap: wrap; }
+  .qz-community .xai__head--creator > .xvote, .qz-community .xai__head--creator > .xscore { margin-left: auto; }
+  .qz-community .xai__head--creator > .xvote { gap: 0; } /* 187px: 44px の票ボタンは保ち、間の余白だけ詰める */
+  .qz-community .xai__head--creator .xvote__score { min-width: 34px; }
+  .qz-community .guest-hint { flex-wrap: wrap; } /* ログインのボタンも、文字の次の行へ送る */
+  .qz-community .guest-hint .btn { margin-left: auto; }
+}
+
+/* 進み具合の板（作っている間だけ。枠の中で上に張り付く） */
+.qz-community .xai__prog { position: sticky; top: 6px; z-index: 5; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px 12px; border: 1.5px solid var(--separator, #e5cdb8); border-radius: 16px; background: var(--surface, #fff); box-shadow: 0 4px 16px rgb(0 0 0 / 8%); overflow-anchor: none; }
+/* 作り終わったら（できた・止めた・失敗）画面の上に貼り付けず、画像解説を隠さない（2026-10-14 実機の確認で直した） */
+.qz-community .xai__prog:not([data-state="running"]) { position: static; box-shadow: none; }
+.qz-community .xai__prog[data-state="running"] { border-color: var(--accent, #6535b5); }
+.qz-community .xai__prog[data-state="error"] { border-color: var(--danger, #b23336); }
+.qz-community .xai__mascot { width: 64px; height: 64px; }
+.qz-community .xai__mascot video, .qz-community .xai__mascot img { display: block; width: 64px; height: 64px; object-fit: contain; border-radius: 12px; }
+.qz-community .xai__prog-main { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.qz-community .xai__prog-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.qz-community .xai__prog-meta { flex: 1 1 auto; font-size: 13px; font-weight: 800; color: var(--accent, #6535b5); font-variant-numeric: tabular-nums; }
+.qz-community .xai__btn { min-height: 36px; padding: 0 14px; border: 1.5px solid var(--control-border, #ad8973); border-radius: 999px; background: var(--surface, #fff); color: inherit; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.qz-community .xai__say { margin: 0; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.qz-community .xai__prog[data-state="error"] .xai__say { color: var(--danger, #b23336); font-weight: 700; }
+.qz-community .xai-bar { position: relative; height: 8px; border-radius: 999px; background: var(--surface-2, #fff3e6); overflow: hidden; }
+.qz-community .xai-bar__fill { position: absolute; inset: 0; border-radius: 999px; background: var(--accent, #6535b5); transform-origin: left center; transform: scaleX(0); transition: transform .12s linear; }
+.qz-community .xai-bar::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 35%; border-radius: 999px; background: repeating-linear-gradient(115deg, var(--accent, #6535b5) 0 10px, rgb(101 53 181 / 45%) 10px 20px); opacity: 0; }
+.qz-community .xai-bar.is-indeterminate::after { opacity: 1; animation: xai-sweep .9s linear infinite; }
+@keyframes xai-sweep { from { transform: translateX(-100%); } to { transform: translateX(290%); } }
+.qz-community .xai__steps { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 0; padding: 0; list-style: none; font-size: 12px; }
+.qz-community .xai__steps li { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px 2px 3px; border-radius: 999px; background: var(--surface-2, #fff3e6); color: var(--text-2, #65594d); }
+.qz-community .xai__steps-mark { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border: 1px solid var(--control-border, #ad8973); border-radius: 50%; background: #fff; font-size: 11px; font-weight: 800; line-height: 1; }
+.qz-community .xai__steps li.is-active { background: var(--accent-soft, #f3edff); color: var(--accent, #6535b5); font-weight: 800; outline: 1px solid var(--accent, #6535b5); }
+.qz-community .xai__steps li.is-active .xai__steps-mark { border-color: var(--accent, #6535b5); background: var(--accent, #6535b5); color: #fff; }
+.qz-community .xai__steps li.is-done { color: var(--success, #276846); }
+.qz-community .xai__steps li.is-done .xai__steps-mark { border-color: var(--success, #276846); background: var(--success, #276846); color: #fff; }
+.qz-community .xai__steps li.is-skip { opacity: .55; }
+@media (max-width: 600px) {
+  .qz-community .xai__prog { gap: 8px; padding: 8px 10px; grid-template-columns: 48px minmax(0, 1fr); }
+  .qz-community .xai__mascot, .qz-community .xai__mascot video, .qz-community .xai__mascot img { width: 48px; height: 48px; }
+  .qz-community .xai__steps li:not(.is-active) .xai__steps-label { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .qz-community .xai__steps li:not(.is-active) { padding-right: 3px; }
+}
+
+/* いちばん上の「画像解説」の席（待っている間は低い枠、できたら入れ替える） */
+/* 作り直し・［画像を作る］の間の枕（2026-10-23 本人決定 案B）。自分の1枚のカードの絵の場所に出す。 */
+.qz-community .xai-pillow { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 8px 0 10px; padding: 16px 14px 14px; border: 2px dashed color-mix(in srgb, var(--accent, #6535b5) 45%, transparent); border-radius: 14px; background: var(--accent-soft, #f3edff); color: var(--accent, #6535b5); text-align: center; }
+.qz-community .xai-pillow[hidden], .xai-donebar[hidden] { display: none; }
+.qz-community .xai-pillow__ico { display: inline-flex; }
+.qz-community .xai-pillow__line { margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 8px; font-size: 15px; font-weight: 700; line-height: 1.5; }
+.qz-community .xai-pillow__pct { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.qz-community .xai-pillow .xai-bar { width: min(100%, 320px); height: 6px; background: var(--surface, #fff); }
+/* できたら画面の下の帯（Q6）。下の「次の問題へ」より上に出す。 */
+.xai-donebar { position: fixed; z-index: 60; left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(88px + env(safe-area-inset-bottom, 0px)); max-width: 560px; margin: 0 auto; display: flex; align-items: center; gap: 8px; padding: 8px 8px 8px 16px; border-radius: 14px; background: var(--accent, #6535b5); color: #fff; box-shadow: 0 6px 20px rgb(0 0 0 / 18%); font-size: 15px; font-weight: 700; }
+.xai-donebar__text { flex: 1 1 auto; min-width: 0; }
+.xai-donebar__go { min-height: 44px; padding: 0 16px; border: 0; border-radius: 10px; background: #fff; color: var(--accent, #6535b5); font: inherit; font-weight: 800; cursor: pointer; }
+.xai-donebar__close { min-width: 44px; min-height: 44px; border: 0; background: transparent; color: #fff; font-size: 20px; cursor: pointer; }
+.xai-donebar__go:focus-visible, .xai-donebar__close:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.qz-community .xai__slot:empty { display: none; }
+.qz-community .xai__slot { overflow-anchor: none; }
+.qz-community .xai__info.is-pending, .qz-community .xai__info.is-working { padding: 10px 12px; border: 1.5px dashed var(--separator, #e5cdb8); border-radius: 12px; background: var(--surface-2, #fff3e6); }
+.qz-community .xai__slot-head { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: 14px; }
+.qz-community .xai__slot-pct { margin-left: auto; font-size: 13px; font-weight: 800; color: var(--accent, #6535b5); font-variant-numeric: tabular-nums; }
+.qz-community .xai__info.is-working .xai-bar { margin-top: 8px; }
+.qz-community .xai__info.is-ready { margin: 0; padding-bottom: 12px; border-bottom: 1px dashed var(--separator, #e5cdb8); }
+.qz-community .xai__info.is-ready .qz-md__h { margin: 0 0 8px; }
+.qz-community .xai__info-note { margin: 0 0 6px; font-size: 12px; line-height: 1.5; color: var(--text-2, #65594d); } /* 画像解説の月の上限で図にしたときの一言（2026-10-16） */
+.qz-community .xai__info-img { display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto; background: #fff; border: 1px solid var(--separator, #e5cdb8); border-radius: 10px; }
+.qz-community .xai__info.is-ready .xai__info-img { animation: xai-fadein .12s linear; }
+@keyframes xai-fadein { from { opacity: 0; } to { opacity: 1; } }
+
+/* 図を描いている途中の枠（途中の SVG は出さない。光が左から右へ流れる） */
+.qz-community .xai__skel-box { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; max-width: 560px; min-height: 120px; margin: 8px auto; border: 1px dashed var(--separator, #e5cdb8); border-radius: 10px; background: var(--surface-2, #fff3e6); overflow: hidden; }
+.qz-community .xai__info.is-working .xai__skel-box { min-height: 84px; background: #fff; }
+.qz-community .xai__skel-box::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 70%) 50%, transparent 80%); transform: translateX(-100%); animation: xai-shimmer 1.1s linear infinite; }
+@keyframes xai-shimmer { to { transform: translateX(100%); } }
+.qz-community .xai__skel-text { position: relative; z-index: 1; padding: 0 12px; font-size: 13px; font-weight: 700; color: var(--text-2, #65594d); font-variant-numeric: tabular-nums; }
+
+/* 設定の1行（「解いたら AI が自動で解説を作る」）は、既存の .qz-settings__row をそのまま使う。 */
+
+@media (prefers-reduced-motion: reduce) {
+  .qz-community .xai-bar__fill { transition: none; }
+  .qz-community .xai-bar.is-indeterminate::after { animation: none; width: 100%; opacity: .45; }
+  .qz-community .xai__skel-box::after { animation: none; transform: none; opacity: .35; }
+  .qz-community .xai__info.is-ready .xai__info-img { animation: none; }
+  .qz-community .xai__mascot video { display: none; }
+}
+
+/* ---------- 設定の見出し（2026-10-14 本人承認・ChatGPT の見本） ----------
+   項目を「見た目／音と演出／解き方／AI／記録」の5つの見出しで束ね、見出しごとに角丸の白いカード1枚に並べる（項目の間は薄い線）。
+   ホームの設定パネル（.qz-settings--sections）と出題中の⚙シート（.qz-quiz-settings__body）で同じ部品を使う。
+   外側の .qz-settings は白いカードをやめ（紙色テーマの枠・影・余白を打ち消す）、中の見出しごとのカードが白く見えるようにする。 */
+.qz-settings--sections { gap: 20px; }
+:root[data-quiz-theme="paper"] .qz-settings.qz-settings--sections { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; gap: 20px; }
+.qz-settings__section { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.qz-settings__heading { display: flex; align-items: center; gap: 8px; min-width: 0; margin: 0; padding: 0 4px; font-size: 17px; font-weight: 800; line-height: 1.4; color: var(--text); }
+.qz-settings__heading-icon { flex: none; font-size: 18px; line-height: 1; }
+/* 2026-10-16 区間6（関所F Q4 f）: 見出しの絵は線の絵（views.js の lineIcon）。押す物ではないので線は見出しの字の色（墨）のまま。 */
+.qz-settings__heading-icon .dpg-ico { display: block; width: 20px; height: 20px; }
+.qz-settings__heading-text { min-width: 0; overflow-wrap: anywhere; }
+.qz-settings__card { display: flex; flex-direction: column; min-width: 0; padding: 2px 16px; border: 1px solid var(--separator); border-radius: 16px; background: var(--surface); }
+.qz-settings__card > * { min-width: 0; margin: 0; padding: 14px 0; }
+.qz-settings__card > * + * { border-top: 1px solid var(--separator); }
+/* 項目の説明の1行（音量のすぐ下など）と、音声解説の帯の見本は、直前の項目にくっつけて読む（線を引かない）。 */
+.qz-settings__card > .qz-settings__note,
+.qz-settings__card > .set-preview { padding-top: 0; margin-top: -8px; border-top: 0; }
+/* 先頭の「キーの札を表示」はマウスの端末にしか出ない。出ない間は、その次の項目を先頭として扱う（カードの上端に線を残さない）。 */
+.qz-settings__card > .qz-key-hints-setting:first-child + * { padding-top: 0; border-top: 0; }
+.qz-settings__section--desktop-only { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .qz-settings__section--desktop-only { display: flex; }
+  .qz-settings__card > .qz-key-hints-setting:first-child + * { padding-top: 14px; border-top: 1px solid var(--separator); }
+}
+/* 自動で動く項目の札「自動」（淡い緑の小さな札）。項目名と同じ行に流す（折り返しても札だけが取り残されない）。
+   札は inline にして、項目名の最後の字との間に語結合子（U+2060）を置き、札だけが次の行へ落ちないようにする（2026-10-20）。
+   （）の中は views.js の .qz-settings__keep で1語にする。狭すぎる欄では overflow-wrap で語の途中でも折り、幅0にしない。 */
+.qz-settings__titleline { display: block; overflow-wrap: anywhere; }
+.qz-settings__titleline > .qz-settings__label { display: inline; }
+.qz-settings__titleline > .qz-settings__label::after { content: "\2060"; content: "\2060" / ""; margin-right: 8px; }  /* 札との間の 8px は項目名の側に持つ（札だけが次の行に来たとき、行の頭に余白を残さない） */
+.qz-settings__keep { word-break: keep-all; }
+.qz-settings__auto { display: inline; margin-left: 0; padding: 1px 9px; border-radius: 999px; background: var(--success-soft, #e8f4e9); color: var(--success, #276846); font-size: 12px; font-weight: 800; line-height: 1.5; white-space: nowrap; vertical-align: 1px; }
+/* 出題中の⚙シート: 見出しごとのカードの間隔 */
+:root[data-quiz-theme="paper"] .dpg-more-sheet__section.qz-quiz-settings__body { padding: 0; border: 0; border-radius: 0; background: transparent; }  /* シート側の白い枠は外す（中の見出しごとのカードと二重にしない） */
+.qz-quiz-settings__body > .qz-settings__section { gap: 8px; }
+.qz-quiz-settings__body .qz-settings__heading { font-size: 16px; }
+@media (max-width: 420px) {
+  .qz-settings__card { padding: 2px 14px; }
+}
+
+/* --- 一部を指して聞く（2026-10-15 本人承認の見本 B・C。画面は assets/auto-explain-ask.js。プラスだけ） -----------------
+   選んだ文字の下の［ここを聞く］（.pask-pick）、図を囲む紫の点線の四角（.pask-box）、段落・図のすぐ下に差し込むカード（.pask）。
+   ボタンと四角は #app の外（body の直下）に fixed で置く（画面の作り直しで消えない）。押せる所は 44px 以上。
+   html.pask-on はプラスで聞ける画面のときだけ付く。そのときだけ、解説の画像の長押しメニュー（保存など）と選択を止める（長押しで囲むため）。 */
+.pask-on [data-ask-src] img,
+.pask-on [data-ask-src] svg { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+.pask-pick { position: fixed; z-index: 2147483000; min-width: 44px; min-height: 44px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--accent, #6535b5); color: #fff; font: inherit; font-size: 14px; font-weight: 800; line-height: 1; box-shadow: 0 4px 14px rgb(101 53 181 / 35%); cursor: pointer; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+.pask-pick[hidden] { display: none; }
+.pask-pick:disabled { opacity: .6; cursor: default; }
+.pask-box { position: fixed; z-index: 2147482999; box-sizing: border-box; border: 2px dashed var(--accent, #6535b5); border-radius: 4px; background: rgb(101 53 181 / 8%); pointer-events: none; }
+.pask-box__handle { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; pointer-events: auto; touch-action: none; cursor: nwse-resize; }
+.pask-box__handle--ne, .pask-box__handle--sw { cursor: nesw-resize; }
+.pask-box__handle::before { content: ""; position: absolute; left: 14px; top: 14px; width: 16px; height: 16px; box-sizing: border-box; border: 2px solid #fff; border-radius: 50%; background: var(--accent, #6535b5); box-shadow: 0 1px 4px rgb(0 0 0 / 25%); }
+.pask-box__handle--nw { left: 0; top: 0; }
+.pask-box__handle--ne { left: 100%; top: 0; }
+.pask-box__handle--sw { left: 0; top: 100%; }
+.pask-box__handle--se { left: 100%; top: 100%; }
+.pask-box[data-done="0"] .pask-box__handle { display: none; }
+.pask { min-width: 0; max-width: 100%; box-sizing: border-box; margin: 10px 0 14px; padding: 10px 14px 10px; border: 1.5px solid var(--accent, #6535b5); border-radius: 14px; background: var(--accent-soft, #f3edff); color: var(--text); font-size: 14px; line-height: 1.6; }
+.pask__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pask__title { font-size: 16px; font-weight: 800; color: var(--accent, #6535b5); }
+.pask__close { flex: none; width: 44px; height: 44px; margin: -6px -10px -6px 0; border: 0; border-radius: 999px; background: transparent; color: var(--text-2, #65594d); font: inherit; font-size: 22px; line-height: 1; cursor: pointer; }
+.pask__crop { display: block; max-width: min(100%, 240px); max-height: 180px; margin: 4px auto 8px; border: 1px solid var(--separator, #e5cdb8); border-radius: 8px; background: #fff; }
+.pask__form { display: flex; gap: 8px; margin: 6px 0 0; }
+.pask__input { flex: 1 1 0; width: 0; min-width: 0; min-height: 44px; padding: 0 12px; border: 1.5px solid var(--separator, #e5cdb8); border-radius: 10px; background: var(--surface, #fff); color: var(--text); font: inherit; font-size: 16px; /* 16px 未満だと iOS が入力時に画面を拡大する */ }
+.pask__send { flex: none; min-width: 64px; min-height: 44px; padding: 0 16px; border: 0; border-radius: 10px; background: var(--accent, #6535b5); color: #fff; font: inherit; font-size: 15px; font-weight: 800; cursor: pointer; }
+.pask__input:disabled, .pask__send:disabled { opacity: .55; cursor: default; }
+.pask .pask__answer.qz-notes__body { margin-top: 10px; font-size: 14px; line-height: 1.7; }
+.pask__answer:empty { display: none; }
+.pask__answer[data-state="done"] { padding: 10px 12px; border-radius: 10px; background: var(--surface, #fff); }
+.pask__answer > :last-child { margin-bottom: 0; }
+.pask__wait { margin: 0; color: var(--text-2, #65594d); }
+.pask__error { margin: 0; color: var(--danger, #b23336); font-weight: 700; }
+.pask__foot { margin: 8px 0 0; font-size: 12px; color: var(--text-2, #65594d); }
+/* 問題文と選択肢（2026-10-16 本人決定。見本 https://claude.ai/artifact/QWZJogc3h8G8zbm1tSmzkG の C・D）。
+   選択肢は長押しで丸ごと聞くので、聞ける間は選択肢の文字の選択と長押しメニューを止める。答えたあとの選択肢（押せないボタン）は
+   指の位置で探すので、端末によって押した所が取れないことがないよう指を素通りさせる。聞いている選択肢は紫の点線で囲む。 */
+.pask-on [data-ask-src="question"] .qz-choice,
+.pask-on [data-ask-src="question"] .qz-practice-choice { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+.pask-on [data-ask-src="question"] .qz-choice:disabled { pointer-events: none; }
+.pask-choice-on { outline: 2px dashed var(--accent, #6535b5); outline-offset: 2px; }
+.qz-practice-choices > .pask { list-style: none; }
+::highlight(pask-sel) { background-color: rgb(101 53 181 / 20%); }
+
+/* AIも通常投稿カードで表示する。187pxでも名前・本人札・票を折り返し、本文表は内部でスクロールする。 */
+.qz-community .xnote--ai { grid-template-columns: minmax(0, 1fr); }
+.qz-community .xnote--ai > * { min-width: 0; }
+.qz-community .xnote--ai .xnote__head,
+.qz-community .xnote--ai .note__who,
+.qz-community .xnote--ai .note__foot { flex-wrap: wrap; }
+.qz-community .xnote--ai .xnote__head > .xscore,
+.qz-community .xnote--ai .xnote__head > .xvote { margin-left: auto; }
+.qz-community .xnote--ai .note__foot .linkbtn { max-width: 100%; overflow-wrap: anywhere; }
+.qz-community [data-role="community-ai-controls"] > .xai__regen { flex: 1 1 100%; width: 100%; max-width: 100%; }
+.qz-community [data-role="community-ai-controls"] > .xai__regen > * { min-width: 0; }
+.qz-community [data-role="community-ai-controls"][hidden],
+.qz-community [data-role="community-ai-status"][hidden],
+.qz-community [data-role="community-ai-controls"] [hidden],
+.qz-community [data-role="community-ai-status"] [hidden] { display: none; }
+/* 最初の1枚を作っている間（2026-10-21）: 「まだ解説がありません」と［解説を書く］を隠す（.btn は display を持つので明示）。 */
+.qz-community > [data-role="community-empty"][hidden],
+.qz-community > .xwrite[hidden] { display: none; }
+/* 最初の1枚を作っている間の進み具合の枠（2026-10-21）。下の管理者・週の残りの行と間を空ける。 */
+.qz-community [data-role="community-ai-status"] > .xai__prog { margin: 4px 0 10px; }
+
+/* 畳んだ本文のすぐ下の丸いボタン「∨ 続きを見る」／「∧ 閉じる」（2026-10-21。本人が ChatGPT の3案から E を選択）。
+   みんなの解説のいちばん上の1枚と自分のメモ。薄い紫の丸いボタン、押せる高さは 44px 以上。 */
+.qz-notes__below { display: flex; justify-content: center; margin: 6px 0 2px; }
+.qz-notes__more-below {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; min-width: 44px; padding: 0 20px;
+  border: 0; border-radius: 999px; background: var(--primary-soft, var(--accent-soft, #f1eafa));
+  color: var(--primary, var(--accent, #6535b5)); font: inherit; font-size: 15px; font-weight: 700; line-height: 1.2;
+  cursor: pointer;
+}
+.qz-notes__more-below:hover { background: color-mix(in srgb, var(--primary, var(--accent, #6535b5)) 16%, var(--primary-soft, var(--accent-soft, #f1eafa))); }
+.qz-notes__more-below:focus-visible { outline: 3px solid var(--primary, var(--accent, #6535b5)); outline-offset: 2px; }
+.qz-notes__more-below-icon { display: inline-flex; width: 18px; height: 18px; }
+.qz-notes__more-below-icon svg { width: 18px; height: 18px; transition: transform .15s ease; }
+.qz-notes__more-below.is-open .qz-notes__more-below-icon svg { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .qz-notes__more-below-icon svg { transition: none; } }

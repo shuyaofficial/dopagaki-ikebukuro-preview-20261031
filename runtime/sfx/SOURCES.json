@@ -1,0 +1,1084 @@
+{
+  "createdAt": "2026-09-04T01:18:46.846Z",
+  "method": "Owner-selected generated voices and original procedural effects; user-provided instrumental music and 10% vocal celebration",
+  "sounds": [
+    {
+      "file": "reach/rise.mp3",
+      "duration": 0.65,
+      "source": "original procedural composition",
+      "costUsd": 0
+    },
+    {
+      "file": "gold/06-gold-festival.mp3",
+      "duration": 15,
+      "source": "original procedural composition; build-music-candidates.py",
+      "costUsd": 0,
+      "sha256": "14205b638227d7848001c22d57cf136855cc939680161ef7dd88b06fe5678952",
+      "title": "ゴールド・パレード",
+      "status": "Previous candidate retained; not selected by current manifest"
+    },
+    {
+      "file": "rainbow/10-rainbow-ascend.mp3",
+      "duration": 15,
+      "source": "original procedural composition; build-music-candidates.py",
+      "costUsd": 0,
+      "sha256": "b4369773bd531edb8065f8020adaaa05c16c6f71f96539f3e82b56d1a2885ff8",
+      "title": "虹のその先へ",
+      "status": "Previous candidate retained; not selected by current manifest"
+    },
+    {
+      "file": "premium/02-neon-crown.mp3",
+      "duration": 15,
+      "source": "original procedural composition; build-music-candidates.py",
+      "costUsd": 0,
+      "sha256": "3def77f8567b84891fa7aee4a7b2da25cc507b37b8801898da81cbc1c84d293d",
+      "title": "ネオン・クラウン",
+      "status": "Previous candidate retained; not selected by current manifest"
+    },
+    {
+      "file": "perfect/06-gold-festival.mp3",
+      "duration": 15,
+      "source": "original procedural composition; build-music-candidates.py",
+      "costUsd": 0,
+      "sha256": "14205b638227d7848001c22d57cf136855cc939680161ef7dd88b06fe5678952",
+      "title": "ゴールド・パレード",
+      "status": "Previous candidate retained; not selected by current manifest"
+    },
+    {
+      "file": "gold/fanfare-original.mp3",
+      "duration": 3.4,
+      "source": "original procedural composition; tools/build-sounds.mjs",
+      "costUsd": 0,
+      "sha256": "c935176624917db3156d3a47c42fef13759ebc0166ae36a88c5e7df8954524c0",
+      "status": "Previous candidate retained; not selected by current manifest"
+    },
+    {
+      "file": "rainbow/fanfare-original.mp3",
+      "duration": 3.4,
+      "source": "original procedural composition; tools/build-sounds.mjs",
+      "costUsd": 0,
+      "sha256": "cf266054b6f05ceb6b1887fefa37a802e3c7d38e6882cc00fcddc6c1b63179c3",
+      "status": "Previous candidate retained; not selected by current manifest"
+    },
+    {
+      "file": "premium/fanfare-original.mp3",
+      "duration": 3.4,
+      "source": "original procedural composition; tools/build-sounds.mjs",
+      "costUsd": 0,
+      "sha256": "46a6ebac7d07233f7813c445e8a68d8f1033080e9109b5c29c7864e80681cb61",
+      "status": "legacy file retained; not selected by current manifest"
+    },
+    {
+      "file": "perfect/fanfare-original.mp3",
+      "duration": 3.4,
+      "source": "original procedural composition; tools/build-sounds.mjs",
+      "costUsd": 0,
+      "sha256": "c935176624917db3156d3a47c42fef13759ebc0166ae36a88c5e7df8954524c0",
+      "status": "Previous candidate retained; not selected by current manifest"
+    },
+    {
+      "file": "premium/victory-crystal-from40.mp3",
+      "title": "勝利の結晶",
+      "duration": 22.56326530612245,
+      "source": "User-provided Gemini-generated song; selected from 40.000 seconds to the end; tools/build-victory-audio.mjs",
+      "sourceGenerationCostUsd": null,
+      "processingCostUsd": 0,
+      "sha256": "730332b2eae7938281173c44cb71addb04d9f7f923fe0371ff4f3ea40d0c0931"
+    },
+    {
+      "file": "instrumental/brass-and-bone.mp3",
+      "title": "Brass and Bone",
+      "duration": 62.4065306122449,
+      "sha256": "b666f23de59bce302dd63f3e7af2b73dcef14d68caefbd1a100db69238c0e2f6",
+      "source": "User-provided music; intended as instrumental; constant gain, full original duration retained",
+      "costUsd": null,
+      "processingCostUsd": 0,
+      "provenance": "design/audio-v4/provenance.json",
+      "status": "Previous candidate retained; not selected by current manifest"
+    },
+    {
+      "file": "instrumental/golden-horizon-peak.mp3",
+      "title": "Golden Horizon Peak",
+      "duration": 70.87020408163265,
+      "sha256": "be4c1a97f3b11ce3f25bb0c2bde064ba394601f2f618c79fbf576f6c8018a6e8",
+      "source": "User-provided music; intended as instrumental; constant gain, full original duration retained",
+      "costUsd": null,
+      "processingCostUsd": 0,
+      "provenance": "design/audio-v4/provenance.json",
+      "status": "Previous candidate retained; not selected by current manifest"
+    },
+    {
+      "file": "correct/chime.mp3",
+      "duration": 0.28,
+      "source": "original procedural composition; tools/build-sounds.mjs",
+      "costUsd": 0,
+      "status": "Selected procedural answer effect",
+      "sha256": "f5707978786bd7b3795d9d873f0302b838ce415c692f419e916401a1986ba378",
+      "bytes": 5421,
+      "provenance": "tools/build-sounds.mjs"
+    },
+    {
+      "file": "correct/spark.mp3",
+      "duration": 0.3,
+      "source": "original procedural composition; tools/build-sounds.mjs",
+      "costUsd": 0,
+      "status": "Selected procedural answer effect",
+      "sha256": "4b23c1bead841f3ce5e352ed2baf6b0fb7226a00a382bc66831eabae32c7df3f",
+      "bytes": 5805,
+      "provenance": "tools/build-sounds.mjs"
+    },
+    {
+      "file": "wrong/soft-down.mp3",
+      "duration": 0.3,
+      "source": "original procedural composition; tools/build-sounds.mjs",
+      "costUsd": 0,
+      "status": "Selected procedural answer effect",
+      "sha256": "aadc0265550fe679de1c86b7a4bccd4ac93537dc167478f38cf4317716a0a900",
+      "bytes": 5805,
+      "provenance": "tools/build-sounds.mjs"
+    },
+    {
+      "id": "v01",
+      "file": "correct/voice-v01-yes-20260908.mp3",
+      "text": "Yes!",
+      "title": "Yes!",
+      "duration": 0.8,
+      "bytes": 14253,
+      "sha256": "de7807decf1c1867f2447470e6124dcd98cc802ec69b20a773f93b0918207f6e",
+      "provider": "Generated voice",
+      "source": "Locally generated voice; owner-selected; no voice cloning",
+      "playbackRate": 1,
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-09-08",
+        "evidence": "Original text synthesized locally with an Apache-2.0 licensed model. Model and runtime are not distributed with the application.",
+        "license": "Apache-2.0",
+        "references": [
+          "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+          "https://www.apache.org/licenses/LICENSE-2.0"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "v02",
+      "file": "correct/voice-v02-yossha-20260908.mp3",
+      "text": "よっしゃー！",
+      "title": "よっしゃー！",
+      "duration": 1.04,
+      "bytes": 18093,
+      "sha256": "ba2ba768ec45e65868fb12d15640e5fa6ddfe6a3c7c741b0a432cfd9cb3a23e3",
+      "provider": "Generated voice",
+      "source": "Locally generated voice; owner-selected; no voice cloning",
+      "playbackRate": 1,
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-09-08",
+        "evidence": "Original text synthesized locally with an Apache-2.0 licensed model. Model and runtime are not distributed with the application.",
+        "license": "Apache-2.0",
+        "references": [
+          "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+          "https://www.apache.org/licenses/LICENSE-2.0"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "v03",
+      "file": "correct/voice-v03-susamajii-20260908.mp3",
+      "text": "すさまじいな",
+      "title": "すさまじいな",
+      "duration": 1.92,
+      "bytes": 31917,
+      "sha256": "1505c42e5b41caa640f43fe759c76359888cce5fddf991ec06e240b315adecf4",
+      "provider": "Generated voice",
+      "source": "Locally generated voice; owner-selected; no voice cloning",
+      "playbackRate": 1,
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-09-08",
+        "evidence": "Original text synthesized locally with an Apache-2.0 licensed model. Model and runtime are not distributed with the application.",
+        "license": "Apache-2.0",
+        "references": [
+          "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+          "https://www.apache.org/licenses/LICENSE-2.0"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "v05",
+      "file": "wrong/voice-v05-nanishitenno-20260908.mp3",
+      "text": "何をしてんの？何をしてんの！",
+      "title": "何をしてんの？何をしてんの！",
+      "duration": 4.72,
+      "bytes": 76845,
+      "sha256": "04d0b324d772b181dff003fcfb1247962d15267addc37f9fe160e69fc1a7af90",
+      "provider": "Generated voice",
+      "source": "Locally generated voice; owner-selected; no voice cloning",
+      "playbackRate": 1,
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-09-08",
+        "evidence": "Original text synthesized locally with an Apache-2.0 licensed model. Model and runtime are not distributed with the application.",
+        "license": "Apache-2.0",
+        "references": [
+          "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+          "https://www.apache.org/licenses/LICENSE-2.0"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "v07",
+      "file": "wrong/voice-v07-you-died-20260908.mp3",
+      "text": "You died",
+      "title": "You died",
+      "duration": 1.84,
+      "bytes": 30765,
+      "sha256": "1289188d44ed1d338d739d150902b33d9f5a72a39cc33219f0d4c3cfca45e33b",
+      "provider": "Generated voice",
+      "source": "Locally generated voice; owner-selected; no voice cloning",
+      "playbackRate": 1,
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-09-08",
+        "evidence": "Original text synthesized locally with an Apache-2.0 licensed model. Model and runtime are not distributed with the application.",
+        "license": "Apache-2.0",
+        "references": [
+          "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+          "https://www.apache.org/licenses/LICENSE-2.0"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "v08",
+      "file": "wrong/voice-v08-nandeyanen-20260908.mp3",
+      "text": "なんでやねん！",
+      "title": "なんでやねん！",
+      "duration": 1.44,
+      "bytes": 24237,
+      "sha256": "c5191c2b673aa3a1cb27ad24a588c11297239c53e63f0858caa988ace76d34bd",
+      "provider": "Generated voice",
+      "source": "Locally generated voice; owner-selected; no voice cloning",
+      "playbackRate": 1,
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-09-08",
+        "evidence": "Original text synthesized locally with an Apache-2.0 licensed model. Model and runtime are not distributed with the application.",
+        "license": "Apache-2.0",
+        "references": [
+          "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+          "https://www.apache.org/licenses/LICENSE-2.0"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "file": "instrumental/the-winning-note.mp3",
+      "title": "The Winning Note",
+      "duration": 61.178776,
+      "sha256": "4a87e59d4218831fec788cfd547c8e09e63dfc7108f3652125f91975433bb3e0",
+      "source": "Gemini web app Lyria 3.5 instrumental (2026-09-16), constant gain -3.03 dB to -14.45 LUFS / -2 dBTP, MP3 192k",
+      "provenance": "design/celebration-v9/runway/adopt-media.json"
+    },
+    {
+      "file": "instrumental/crest-of-the-sky.mp3",
+      "title": "Crest of the Sky",
+      "duration": 67.134694,
+      "sha256": "04dd03635bf9ecf92d9421affd7ad08e7351c5ac307d28aabb63dd449eca5611",
+      "source": "Gemini web app Lyria 3.5 instrumental (2026-09-16), constant gain -3.39 dB to -14.45 LUFS / -2 dBTP, MP3 192k",
+      "provenance": "design/celebration-v9/runway/adopt-media.json"
+    },
+    {
+      "file": "rankup/rankup-b1-v1.mp3",
+      "title": "ランクアップ B1（溜め→止め→解放・2.4秒）",
+      "duration": 2.424,
+      "source": "original procedural composition (numpy/scipy; night/区間13/sound/tools/make_sounds.py rankup-b1-sync), copied unchanged",
+      "costUsd": 0,
+      "status": "Selected procedural effect for rank-up (kind rankup)",
+      "sha256": "a63142d69289e7e3af2fa6760439ec0838d27fd82c633d4d9a6db92f052083e9",
+      "bytes": 39213,
+      "format": "MP3 128 kb/s CBR, mono, 48000 Hz",
+      "measured": {
+        "integratedLufs": -16.8,
+        "truePeakDbtp": -6.9,
+        "mMaxLufs": -14
+      },
+      "addedAt": "2026-10-19",
+      "provenance": "night/区間16/sound2/tools/build_audio.py（関所P Q14・本人が選んだ候補）"
+    },
+    {
+      "file": "streak/streak-e1-v1.mp3",
+      "title": "連続日数 E1（ポン・ポン・ポーン・0.98秒）",
+      "duration": 0.984,
+      "source": "original procedural composition (numpy/scipy; night/区間13/sound/tools/make_sounds.py streak-e1-steps), copied unchanged",
+      "costUsd": 0,
+      "status": "Selected procedural effect for study streak (kind streak)",
+      "sha256": "09db831f5145eea94e6f9802e35ca4afc33ef7a00d6b52bb6e46c9a969fe933d",
+      "bytes": 16173,
+      "format": "MP3 128 kb/s CBR, mono, 48000 Hz",
+      "measured": {
+        "integratedLufs": -17.5,
+        "truePeakDbtp": -8.7,
+        "mMaxLufs": -16
+      },
+      "addedAt": "2026-10-19",
+      "provenance": "night/区間16/sound2/tools/build_audio.py（関所P Q14・本人が選んだ候補）"
+    },
+    {
+      "file": "instrumental/perfect-gold-n4-rp1-v1.mp3",
+      "title": "R-P1 金・小節版（N4 の動画 7 秒用）",
+      "duration": 7.027,
+      "source": "Runway (Lyria 3 Clip) instrumental generated 2026-10-19 by Cowork RUNWAY-SOUND (night/区間13/runway-sound, RM2c); 7.0 s cut so the peak meets the video peak; constant gain to -14.45 LUFS / -2 dBTP ceiling; copied unchanged",
+      "costUsd": 0,
+      "status": "Selected: gold intro music for n4-starbook-v1.mp4 (fx manifest music)",
+      "sha256": "0d0dcd5085fcb62ce80ace294f633a3fd3bb291ae6806cd25d689a8218f0b659",
+      "bytes": 169317,
+      "format": "MP3 192 kb/s CBR, stereo, 44100 Hz",
+      "measured": {
+        "integratedLufs": -14.4,
+        "truePeakDbtp": -5.1,
+        "mMaxLufs": -11.4
+      },
+      "addedAt": "2026-10-19",
+      "provenance": "night/区間16/sound2/tools/build_audio.py（関所P Q14・本人が選んだ候補）"
+    },
+    {
+      "file": "instrumental/perfect-gold-pachinko-rp2-v1.mp3",
+      "title": "R-P2 金・秒指定版（パチンコの動画 5.2 秒用）",
+      "duration": 7.027,
+      "source": "Runway (Lyria 3 Clip) instrumental generated 2026-10-19 by Cowork RUNWAY-SOUND (night/区間13/runway-sound, RM2a); 7.0 s cut so the peak meets the video peak; constant gain to -14.45 LUFS / -2 dBTP ceiling; copied unchanged",
+      "costUsd": 0,
+      "status": "Selected: gold intro music for gold-pachinko-v9.mp4 (fx manifest music)",
+      "sha256": "6fb0dfbafe86a46c104189e404416055936915b0666f4d382fb7a871b13dc644",
+      "bytes": 169317,
+      "format": "MP3 192 kb/s CBR, stereo, 44100 Hz",
+      "measured": {
+        "integratedLufs": -14.4,
+        "truePeakDbtp": -4.7,
+        "mMaxLufs": -11.5
+      },
+      "addedAt": "2026-10-19",
+      "provenance": "night/区間16/sound2/tools/build_audio.py（関所P Q14・本人が選んだ候補）"
+    },
+    {
+      "file": "instrumental/perfect-rainbow-gacha-rp3-v1.mp3",
+      "title": "R-P3 虹・小節版（虹の動画 6.6 秒用）",
+      "duration": 7.027,
+      "source": "Runway (Lyria 3 Clip) instrumental generated 2026-10-19 by Cowork RUNWAY-SOUND (night/区間13/runway-sound, RM3c); 7.0 s cut so the peak meets the video peak; constant gain to -14.45 LUFS / -2 dBTP ceiling; copied unchanged",
+      "costUsd": 0,
+      "status": "Selected: rainbow intro music for rainbow-gacha-v9.mp4 (fx manifest music)",
+      "sha256": "13d0d1aea48fbc805359a2a4ff14354daaad002b941eeac92efefd5826fc86fa",
+      "bytes": 169317,
+      "format": "MP3 192 kb/s CBR, stereo, 44100 Hz",
+      "measured": {
+        "integratedLufs": -14.4,
+        "truePeakDbtp": -3.6,
+        "mMaxLufs": -11
+      },
+      "addedAt": "2026-10-19",
+      "provenance": "night/区間16/sound2/tools/build_audio.py（関所P Q14・本人が選んだ候補）"
+    },
+    {
+      "file": "instrumental/study-loop-rs1-v1.mp3",
+      "title": "R-S1 勉強中・エレピ（76 BPM・8小節ループ 25.27秒）",
+      "duration": 25.522,
+      "source": "Runway (Lyria 3 Clip) instrumental generated 2026-10-19 by Cowork RUNWAY-SOUND (night/区間13/runway-sound/元/RM4a_study-loop-epiano.mp3); 3.07 s + 8 bars (1114425 samples at 44.1 kHz), head 0.15 s crossfaded with the continuation, constant gain to -20 LUFS, 0.1 s of the loop wrapped before and after (seamless Web Audio loop 0.1 s .. 0.1 s + 25.2704 s)",
+      "costUsd": 0,
+      "status": "Selected: study music (default off; assets/music/study-music.js)",
+      "sha256": "38c1b07600c30369144d0ca1edabad95ca028789812e38baaf85a344f63938b4",
+      "bytes": 613190,
+      "format": "MP3 192 kb/s CBR, stereo, 44100 Hz",
+      "measured": {
+        "integratedLufs": -20,
+        "truePeakDbtp": -6.3,
+        "mMaxLufs": -17.2
+      },
+      "loop": {
+        "loopStartSec": 0.1,
+        "loopEndSec": 25.370408163265306,
+        "loopSamples": 1114425,
+        "padSamples": 4410
+      },
+      "addedAt": "2026-10-19",
+      "provenance": "night/区間16/sound2/tools/build_audio.py（関所P Q14・本人が選んだ候補）"
+    },
+    {
+      "id": "ack-ok",
+      "file": "voiceack/ack-ok.mp3",
+      "text": "OK！",
+      "title": "OK！",
+      "duration": 0.61,
+      "bytes": 8194,
+      "sha256": "3de89f8fbe18cdb074c3536ac7aa947250b5189e4645e38a0e3181028fffe127",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "ack-hai",
+      "file": "voiceack/ack-hai.mp3",
+      "text": "はい！",
+      "title": "はい！",
+      "duration": 0.31,
+      "bytes": 4432,
+      "sha256": "839b1956cf91100f4ac78bc6f7cad5c98b9b3ee9becae91d0722fdb740d93f95",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "ack-ryokai",
+      "file": "voiceack/ack-ryokai.mp3",
+      "text": "了解！",
+      "title": "了解！",
+      "duration": 0.45,
+      "bytes": 6313,
+      "sha256": "914781a4abdd80ae7eac58b3d488d12ca8a2c1a5fa3dd6ab20a2b16f5b960399",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "ack-ryo",
+      "file": "voiceack/ack-ryo.mp3",
+      "text": "りょ！",
+      "title": "りょ！",
+      "duration": 0.34,
+      "bytes": 5059,
+      "sha256": "53c58364e9336853a3820b380e79234717cb17781b083dfa27ba11b0cd2d81e2",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "ack-okke",
+      "file": "voiceack/ack-okke.mp3",
+      "text": "オッケー！",
+      "title": "オッケー！",
+      "duration": 0.58,
+      "bytes": 7880,
+      "sha256": "388d82681d981b73ca19c7e3b105587f933df46b9fbd6cb885820f31e4630162",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "ack-haai",
+      "file": "voiceack/ack-haai.mp3",
+      "text": "はーい！",
+      "title": "はーい！",
+      "duration": 0.64,
+      "bytes": 8507,
+      "sha256": "3bf510db0441e00a4b7444ac5d5db03a6222e221cfd35e188732e3d455fe6897",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "ack-hoi",
+      "file": "voiceack/ack-hoi.mp3",
+      "text": "ほい！",
+      "title": "ほい！",
+      "duration": 0.32,
+      "bytes": 4746,
+      "sha256": "e7e8b6e5ea8f60303e9a925c35df71ed4522b7be53e8ac123e876b554af4bb4e",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "ack-ikuyo",
+      "file": "voiceack/ack-ikuyo.mp3",
+      "text": "いくよ！",
+      "title": "いくよ！",
+      "duration": 0.7,
+      "bytes": 9134,
+      "sha256": "41d6998c2ca216ccc57558594e714bbccbbf52e60406029d573b8b585b6d57be",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "info-answer-first",
+      "file": "voiceinfo/info-answer-first.mp3",
+      "text": "先に答えてね",
+      "title": "先に答えてね",
+      "duration": 1.19,
+      "bytes": 15090,
+      "sha256": "00b2f0cdab266aec189dec5bd985577a76d45836970e88195c7301206420aa0f",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "info-no-choice",
+      "file": "voiceinfo/info-no-choice.mp3",
+      "text": "その番号はないよ",
+      "title": "その番号はないよ",
+      "duration": 1.7,
+      "bytes": 21359,
+      "sha256": "380ea14e1a3dd4c3e421cbad56dbc15aeabf9e85569e6993028762a20143a945",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "info-count",
+      "file": "voiceinfo/info-count.mp3",
+      "text": "選ぶ数が違うよ",
+      "title": "選ぶ数が違うよ",
+      "duration": 1.71,
+      "bytes": 21359,
+      "sha256": "a46f3fcc1e8f79e95b2e8767f16dbd992a2e93753df9ea9572d0f9ffb6db3a8c",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "info-plus-only",
+      "file": "voiceinfo/info-plus-only.mp3",
+      "text": "自由な質問は、プラスで使えるよ",
+      "title": "自由な質問は、プラスで使えるよ",
+      "duration": 2.48,
+      "bytes": 30450,
+      "sha256": "efef8325970ca265c665c58cb670c28547e839fb12091b10a6cba68df520a074",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "info-chat-limit",
+      "file": "voiceinfo/info-chat-limit.mp3",
+      "text": "今月の会話は、もう使い切ったよ",
+      "title": "今月の会話は、もう使い切ったよ",
+      "duration": 2.74,
+      "bytes": 33585,
+      "sha256": "696c856e7f3fa4e2cb2de6f03eb464aa767541aa23816d792b88e076aa00ef6e",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "info-wake-only",
+      "file": "voiceinfo/info-wake-only.mp3",
+      "text": "なになに？",
+      "title": "なになに？",
+      "duration": 0.74,
+      "bytes": 9761,
+      "sha256": "9d07f0c687841b380951f8da6663641191a314f2a47f2847cb1ba86c3fa02278",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-01",
+      "file": "reisho/reisho-01.mp3",
+      "text": "おっおうwww",
+      "title": "おっおうwww",
+      "duration": 3.13,
+      "bytes": 38287,
+      "sha256": "ea566d6d2746675a41ecbeda3eacdd23a256f86e775e6503ab0b30bfe84b9088",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-02",
+      "file": "reisho/reisho-02.mp3",
+      "text": "かっけぇwww",
+      "title": "かっけぇwww",
+      "duration": 2.18,
+      "bytes": 27002,
+      "sha256": "d05716bcffe8ad49a706b43da5b0cab7460ebaa1a20a68ae60d0e10f7449e4aa",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-03",
+      "file": "reisho/reisho-03.mp3",
+      "text": "わっかんないかwww",
+      "title": "わっかんないかwww",
+      "duration": 2.45,
+      "bytes": 30137,
+      "sha256": "02036528e683c033083f6f7859f0d8ed229517eea33bcc837f77afda539cb3f5",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-04",
+      "file": "reisho/reisho-04.mp3",
+      "text": "そこまでwww",
+      "title": "そこまでwww",
+      "duration": 1.86,
+      "bytes": 23240,
+      "sha256": "861b2b9d95983065b59ac33294e90f86adf21248c63cac6a34ac8685e06028a7",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-05",
+      "file": "reisho/reisho-05.mp3",
+      "text": "エッグwww",
+      "title": "エッグwww",
+      "duration": 0.8,
+      "bytes": 10388,
+      "sha256": "bfb59ff24ada0e6fc0b0a5f47d14e02fe6a193f7c73e23b6bf52f8382c6719fc",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-06",
+      "file": "reisho/reisho-06.mp3",
+      "text": "冗談ですやんwww",
+      "title": "冗談ですやんwww",
+      "duration": 1.93,
+      "bytes": 23867,
+      "sha256": "ffe731108bc3c110af6694161dd3208bdff04ea7b95e9573444b2037f7d091b6",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-07",
+      "file": "reisho/reisho-07.mp3",
+      "text": "イエベなんですねwww",
+      "title": "イエベなんですねwww",
+      "duration": 1.52,
+      "bytes": 19165,
+      "sha256": "3fba5c930e2be6efedeaf84276b5e9abeae1b8fd313f871c314fd13e01e94985",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-08",
+      "file": "reisho/reisho-08.mp3",
+      "text": "頑張っちゃってるwww",
+      "title": "頑張っちゃってるwww",
+      "duration": 1.52,
+      "bytes": 19165,
+      "sha256": "b6e82bf9055035c1b28f777948833cd58f4210e31604198341e61618e7df0778",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-09",
+      "file": "reisho/reisho-09.mp3",
+      "text": "きっちーwww",
+      "title": "きっちーwww",
+      "duration": 1.57,
+      "bytes": 19792,
+      "sha256": "cfd47232bd47ed34963d40c844e9d5ca8b0d05c7ab469cb4f5e59c4b467af94d",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-10",
+      "file": "reisho/reisho-10.mp3",
+      "text": "ええてwww",
+      "title": "ええてwww",
+      "duration": 2.61,
+      "bytes": 32331,
+      "sha256": "cace571c15b436924267169cf2b3efe78a7ad79a1b481b4de400b82f7ea08df4",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "reisho-11",
+      "file": "reisho/reisho-11.mp3",
+      "text": "あいたたたたwww",
+      "title": "あいたたたたwww",
+      "duration": 1.2,
+      "bytes": 15090,
+      "sha256": "51c236180b5e14e659323a587c1bb468097278da8810a5d82172401d2536fc0d",
+      "provider": "Gemini API TTS (gemini-3.8-flash-lite-tts, voice Schedar)",
+      "source": "2026-10-21 generated once for the voice-control replies; script approved by the owner (tools/voice-control/replies.json)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "info-on-screen",
+      "file": "voiceinfo/info-on-screen.mp3",
+      "text": "それは画面で押してね",
+      "title": "それは画面で押してね",
+      "duration": 1.48,
+      "bytes": 18538,
+      "sha256": "37f87a9d3fa8f4c0e5cdf14677afadb5a246e52183cea8ea57a3dd1edff88179",
+      "provider": "Gemini API TTS (gemini-3.8-flash-tts, voice Schedar)",
+      "source": "2026-10-23 generated once for the voice-control info replies; script approved by the owner (tools/voice-control/replies.json, survey 7Y2d53dMDMCSNBnKG1jLkM v2 Q13)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "info-not-here",
+      "file": "voiceinfo/info-not-here.mp3",
+      "text": "今の画面にはないよ",
+      "title": "今の画面にはないよ",
+      "duration": 1.39,
+      "bytes": 17598,
+      "sha256": "a1a501bd82af6ab851c8d9a22b430e7f288c35882c2025daad3f8e5ca6295f88",
+      "provider": "Gemini API TTS (gemini-3.8-flash-tts, voice Schedar)",
+      "source": "2026-10-23 generated once for the voice-control info replies; script approved by the owner (tools/voice-control/replies.json, survey 7Y2d53dMDMCSNBnKG1jLkM v2 Q13)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    },
+    {
+      "id": "info-bottom",
+      "file": "voiceinfo/info-bottom.mp3",
+      "text": "いちばん下だよ",
+      "title": "いちばん下だよ",
+      "duration": 1.23,
+      "bytes": 15717,
+      "sha256": "45b856beddbd5aea9cb22f4f23c3218e204fad82b8e3cb252fb8df0cb452e3ee",
+      "provider": "Gemini API TTS (gemini-3.8-flash-tts, voice Schedar)",
+      "source": "2026-10-23 generated once for the voice-control info replies; script approved by the owner (tools/voice-control/replies.json, survey 7Y2d53dMDMCSNBnKG1jLkM v2 Q13)",
+      "commercialUse": {
+        "status": "verified",
+        "verifiedAt": "2026-10-21",
+        "evidence": "Generated with the paid Gemini API key, the same way as the bundled explanation audio. Gemini API Additional Terms: Google does not claim ownership of generated content.",
+        "license": "Gemini API Additional Terms of Service",
+        "references": [
+          "https://ai.google.dev/gemini-api/terms"
+        ],
+        "requiredCredit": "",
+        "creditLocation": ""
+      }
+    }
+  ],
+  "celebrationSelection": {
+    "vocalProbability": 0.1,
+    "introVariants": [
+      {
+        "file": "app/assets/fx/guaranteed/yelena-voice-v9.mp4",
+        "weight": 0.35
+      },
+      {
+        "file": "app/assets/fx/guaranteed/smirk-voice-v9.mp4",
+        "weight": 0.15
+      },
+      {
+        "file": "app/assets/fx/guaranteed/s04-hairtap-voice-v1.mp4",
+        "weight": 0.5,
+        "note": "2026-10-19 関所R 3-1。重みは本人の答え待ちの仮置き"
+      }
+    ]
+  },
+  "voiceSelection": {
+    "provider": "Generated voice",
+    "approved": [
+      "v01",
+      "v02",
+      "v03",
+      "v05",
+      "v07",
+      "v08"
+    ],
+    "declined": [
+      "v04",
+      "v06"
+    ],
+    "pending": [],
+    "playbackRate": 1,
+    "adoptedAt": "2026-09-08"
+  },
+  "answerFeedback": {
+    "effects": {
+      "correct": [
+        "chime.mp3",
+        "spark.mp3"
+      ],
+      "wrong": [
+        "soft-down.mp3"
+      ]
+    },
+    "selectionWhenBothEnabled": {
+      "effectProbability": 0.5,
+      "voiceProbability": 0.5,
+      "simultaneousPlayback": false
+    }
+  },
+  "updatedAt": "2026-10-21T07:52:37.175Z"
+}
